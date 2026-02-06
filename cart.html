@@ -233,9 +233,8 @@
     function checkLineAdded() {
       const hasAddedLine = localStorage.getItem('lineAdded_' + lineId) === 'true';
       if (!hasAddedLine) {
-        // Redirect to shop page to add LINE friend
-        alert('請先加入 LINE 好友才能購買商品！');
-        window.location.href = 'shop.html';
+        // Redirect directly to LINE add friend page
+        window.location.href = 'https://line.me/ti/p/@' + lineId;
         return false;
       }
       return true;

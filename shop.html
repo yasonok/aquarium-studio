@@ -551,21 +551,29 @@
     
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      checkLineAdded();
-      loadSiteSettings();
-      loadFooterInfo();
+      // Check if already added LINE friend
+      hasAddedLine = localStorage.getItem('lineAdded_' + lineId) === 'true';
       
-      // Check URL params
-      const urlParams = new URLSearchParams(window.location.search);
-      const category = urlParams.get('category');
-      const search = urlParams.get('search');
-      
-      if (category) {
-        filterProducts(category);
-      } else if (search) {
-        performSearchFilter(search);
+      if (hasAddedLine) {
+        // Already added - load products
+        loadSiteSettings();
+        loadFooterInfo();
+        
+        // Check URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const search = urlParams.get('search');
+        
+        if (category) {
+          filterProducts(category);
+        } else if (search) {
+          performSearchFilter(search);
+        } else {
+          renderProducts('all', 'default');
+        }
       } else {
-        renderProducts('all', 'default');
+        // Not added yet - directly redirect to LINE add friend page
+        window.location.href = 'https://line.me/ti/p/@' + lineId;
       }
     });
   </script>
