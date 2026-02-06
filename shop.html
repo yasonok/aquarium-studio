@@ -7,143 +7,143 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <div class="header-inner">
-        <a href="index.html" class="logo">
-          <span class="logo-icon">🐟</span>
-          <span class="logo-text">Aquarium <span>Studio</span></span>
-        </a>
-        
-        <nav class="nav-links">
-          <a href="index.html">首頁</a>
-          <a href="shop.html" class="active">商店</a>
-          <a href="cart.html" class="cart-icon">
-            🛒 購物車
-            <span class="cart-badge" id="cartCount">0</span>
+  <!-- Loading State -->
+  <div id="loading" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+    <p>載入中...</p>
+  </div>
+
+  <!-- LINE Add Friend Page (shown if not added) -->
+  <div id="line-page" style="display: none;">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px; background: linear-gradient(135deg, #06c755 0%, #00b44a 100%); color: white;">
+      <h1 style="font-size: 2rem; margin-bottom: 20px;">💚 加入 LINE 好友</h1>
+      <p style="font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9;">請先加入 LINE 好友才能購買商品</p>
+      <a href="https://line.me/ti/p/@yasonok02061" class="btn btn-light" style="background: white; color: #06c755; padding: 15px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: bold;">
+        📱 加入 LINE 好友
+      </a>
+      <button onclick="confirmAdded()" style="margin-top: 20px; background: none; border: 2px solid white; color: white; padding: 10px 30px; border-radius: 25px; cursor: pointer;">
+        ✅ 我已加入好友
+      </button>
+    </div>
+  </div>
+
+  <!-- Shop Page (shown if added) -->
+  <div id="shop-page" style="display: none;">
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="index.html" class="logo">
+            <span class="logo-icon">🐟</span>
+            <span class="logo-text">Aquarium <span>Studio</span></span>
           </a>
-          <a href="admin.html">管理</a>
-        </nav>
+          
+          <nav class="nav-links">
+            <a href="index.html">首頁</a>
+            <a href="shop.html" class="active">商店</a>
+            <a href="cart.html" class="cart-icon">
+              🛒 購物車
+              <span class="cart-badge" id="cartCount">0</span>
+            </a>
+            <a href="admin.html">管理</a>
+          </nav>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Shop Section -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 id="shopTitle">🐠 孔雀魚商品</h2>
-        <p id="shopSubtitle">選擇您喜愛的孔雀魚品種</p>
-      </div>
-      
-      <!-- Product Controls -->
-      <div class="product-controls">
-        <div class="filter-buttons">
-          <button class="filter-btn active" onclick="filterProducts('all')" data-category="all">全部</button>
-          <button class="filter-btn" onclick="filterProducts('紅色系')" data-category="紅色系">🔴 紅色系</button>
-          <button class="filter-btn" onclick="filterProducts('黑色系')" data-category="黑色系">⚫ 黑色系</button>
-          <button class="filter-btn" onclick="filterProducts('特殊系')" data-category="特殊系">🌈 特殊系</button>
-          <button class="filter-btn" onclick="filterProducts('稀有系')" data-category="稀有系">💎 稀有系</button>
-          <button class="filter-btn" onclick="filterProducts('藍色系')" data-category="藍色系">🔵 藍色系</button>
-          <button class="filter-btn" onclick="filterProducts('金色系')" data-category="金色系">🟡 金色系</button>
+    <!-- Shop Section -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="shopTitle">🐠 孔雀魚商品</h2>
+          <p>選擇您喜愛的孔雀魚品種</p>
         </div>
         
-        <div class="search-sort">
-          <select id="sort-filter" onchange="sortProducts()">
-            <option value="default">🔄 預設排序</option>
-            <option value="price-asc">💰 價格：低到高</option>
-            <option value="price-desc">💰 價格：高到低</option>
-            <option value="name-asc">📝 名稱：A-Z</option>
-            <option value="name-desc">📝 名稱：Z-A</option>
-          </select>
+        <!-- Product Controls -->
+        <div class="product-controls">
+          <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterProducts('all')" data-category="all">全部</button>
+            <button class="filter-btn" onclick="filterProducts('紅色系')" data-category="紅色系">🔴 紅色系</button>
+            <button class="filter-btn" onclick="filterProducts('黑色系')" data-category="黑色系">⚫ 黑色系</button>
+            <button class="filter-btn" onclick="filterProducts('特殊系')" data-category="特殊系">🌈 特殊系</button>
+            <button class="filter-btn" onclick="filterProducts('稀有系')" data-category="稀有系">💎 稀有系</button>
+            <button class="filter-btn" onclick="filterProducts('藍色系')" data-category="藍色系">🔵 藍色系</button>
+            <button class="filter-btn" onclick="filterProducts('金色系')" data-category="金色系">🟡 金色系</button>
+          </div>
+          
+          <div class="search-sort">
+            <select id="sort-filter" onchange="sortProducts()">
+              <option value="default">🔄 預設排序</option>
+              <option value="price-asc">💰 價格：低到高</option>
+              <option value="price-desc">💰 價格：高到低</option>
+              <option value="name-asc">📝 名稱：A-Z</option>
+              <option value="name-desc">📝 名稱：Z-A</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Product Grid -->
+        <div class="product-grid" id="product-grid">
+          <div class="spinner"></div>
         </div>
       </div>
-      
-      <!-- Search Info -->
-      <div class="search-info" id="search-info" style="display: none;">
-        <span id="search-count">0</span> 個結果 for "<span id="search-keyword"></span>"
-        <button class="clear-search-btn" onclick="clearSearch()">✕ 清除搜尋</button>
-      </div>
-      
-      <!-- Product Grid -->
-      <div class="product-grid" id="product-grid">
-        <div class="spinner"></div>
-      </div>
-      
-      <!-- No Results -->
-      <div class="no-results" id="no-results" style="display: none;">
-        <div class="no-results-icon">🔍</div>
-        <h3>沒有找到商品</h3>
-        <p>試試其他關鍵字或分類</p>
-        <button class="clear-search-btn" onclick="clearSearch()">查看所有商品</button>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-section">
-          <h3 id="footerBrand">🐟 Aquarium Studio</h3>
-          <p>專業孔雀魚養殖與販售</p>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-section">
+            <h3>🐟 Aquarium Studio</h3>
+            <p>專業孔雀魚養殖與販售</p>
+          </div>
+          <div class="footer-section">
+            <h3>📞 聯絡我們</h3>
+            <p id="footer-lineId">LINE: @yasonok02061</p>
+            <p id="footer-phone">電話: (02) 1234-5678</p>
+          </div>
+          <div class="footer-section">
+            <h3>🔗 快速連結</h3>
+            <a href="index.html">首頁</a>
+            <a href="shop.html">商店</a>
+            <a href="cart.html">購物車</a>
+          </div>
         </div>
-        <div class="footer-section">
-          <h3>📞 聯絡我們</h3>
-          <p id="footer-lineId">LINE: @yasonok02061</p>
-          <p id="footer-phone">電話: (02) 1234-5678</p>
-          <p id="footer-email">Email: info@example.com</p>
-        </div>
-        <div class="footer-section">
-          <h3>🔗 快速連結</h3>
-          <a href="index.html">首頁</a>
-          <a href="shop.html">商店</a>
-          <a href="cart.html">購物車</a>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Aquarium Studio. All rights reserved.</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Aquarium Studio. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 
   <script src="js/app.js"></script>
   <script src="js/settings.js"></script>
   <script>
+    const lineId = 'yasonok02061';
     let currentCategory = 'all';
     let currentSort = 'default';
-    let lineId = 'yasonok02061';
-    
-    function loadSiteSettings() {
-      if (typeof SiteSettings !== 'undefined') {
-        const settings = SiteSettings.load();
-        lineId = settings.contact.lineId.replace('@', '');
-        
-        // Update UI
-        document.title = settings.site.logo + ' ' + settings.site.name + ' - 商店';
-        
-        const logoText = document.querySelector('.logo-text');
-        if (logoText) logoText.innerHTML = settings.site.name;
-        
-        document.getElementById('shopTitle').innerHTML = settings.site.logo + ' ' + settings.site.name + ' 商品';
-        document.getElementById('footerBrand').innerHTML = settings.site.logo + ' ' + settings.site.name;
-        document.getElementById('footer-lineId').textContent = 'LINE: ' + settings.contact.lineId;
-        document.getElementById('footer-phone').textContent = '電話: ' + settings.contact.phone;
-        document.getElementById('footer-email').textContent = settings.contact.email;
-      }
+
+    function confirmAdded() {
+      localStorage.setItem('lineAdded_' + lineId, 'true');
+      location.reload();
     }
-    
+
+    function showLinePage() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('line-page').style.display = 'block';
+      document.getElementById('shop-page').style.display = 'none';
+    }
+
+    function showShopPage() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('line-page').style.display = 'none';
+      document.getElementById('shop-page').style.display = 'block';
+    }
+
     function renderProducts(category = 'all', sort = 'default') {
       const grid = document.getElementById('product-grid');
       const products = AquariumApp.getProducts();
+      let filtered = category === 'all' ? products : products.filter(p => p.category === category);
       
-      // Filter by category
-      let filtered = category === 'all' 
-        ? products 
-        : products.filter(p => p.category === category);
-      
-      // Sort
       switch(sort) {
         case 'price-asc': filtered.sort((a, b) => a.price - b.price); break;
         case 'price-desc': filtered.sort((a, b) => b.price - a.price); break;
@@ -152,32 +152,14 @@
       }
       
       if (filtered.length === 0) {
-        grid.innerHTML = `
-          <div class="empty-state" style="grid-column: 1/-1;">
-            <div class="empty-state-icon">🐟</div>
-            <h3>此分類暫無商品</h3>
-            <p>敬請期待！</p>
-          </div>
-        `;
+        grid.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;"><div class="empty-state-icon">🐟</div><h3>此分類暫無商品</h3><p>敬請期待！</p></div>';
         return;
       }
       
-      grid.innerHTML = filtered.map(product => createProductCard(product)).join('');
-    }
-    
-    function createProductCard(product) {
-      const stockClass = product.stock <= 0 ? 'out' : product.stock <= 5 ? 'low' : '';
-      const stockText = product.stock <= 0 ? '缺貨中' : product.stock <= 5 ? `僅剩 ${product.stock}` : `庫存 ${product.stock}`;
-      const btnDisabled = product.stock <= 0 ? 'disabled' : '';
-      const btnText = product.stock <= 0 ? '缺貨' : '加入購物車';
-      
-      return `
-        <div class="product-card" data-id="${product.id}">
+      grid.innerHTML = filtered.map(product => `
+        <div class="product-card">
           <div class="product-image-wrapper">
-            <img src="${product.image || 'images/products/default-guppy.svg'}" 
-                 alt="${product.name}" 
-                 class="product-image"
-                 onerror="this.src='images/products/default-guppy.svg'">
+            <img src="${product.image || 'images/products/default-guppy.svg'}" alt="${product.name}" class="product-image" onerror="this.src='images/products/default-guppy.svg'">
             <span class="product-badge">${product.category}</span>
           </div>
           <div class="product-info">
@@ -185,88 +167,41 @@
             <p class="product-description">${product.description}</p>
             <div class="product-meta">
               <span class="product-price">$${product.price}</span>
-              <span class="product-stock ${stockClass}">${stockText}</span>
+              <span class="product-stock">庫存 ${product.stock}</span>
             </div>
-            <button class="btn btn-primary product-btn add-cart" 
-                    onclick="addToCart(${product.id}, 1)" 
-                    ${btnDisabled} style="width: 100%;">
-              🛒 ${btnText}
-            </button>
+            <button class="btn btn-primary" onclick="AquariumApp.addToCart(${product.id}, 1)" style="width: 100%;">🛒 加入購物車</button>
           </div>
         </div>
-      `;
+      `).join('');
     }
-    
-    function addToCart(productId, quantity) {
-      AquariumApp.addToCart(productId, quantity);
-      updateCartCount();
-    }
-    
+
     function filterProducts(category) {
       currentCategory = category;
-      
-      // Update button states
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.category === category);
-      });
-      
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.category === category));
       renderProducts(category, currentSort);
     }
-    
+
     function sortProducts() {
       currentSort = document.getElementById('sort-filter').value;
       renderProducts(currentCategory, currentSort);
     }
-    
+
     function updateCartCount() {
       const cart = AquariumApp.getCart();
       const countEl = document.getElementById('cartCount');
       if (countEl) countEl.textContent = cart.length;
     }
-    
-    function loadFooterInfo() {
-      if (typeof SiteSettings !== 'undefined') {
-        const settings = SiteSettings.load();
-        const phoneEl = document.getElementById('footer-phone');
-        const lineIdEl = document.getElementById('footer-lineId');
-        const emailEl = document.getElementById('footer-email');
-        
-        if (phoneEl) phoneEl.textContent = '電話: ' + settings.contact.phone;
-        if (lineIdEl) lineIdEl.textContent = 'LINE: ' + settings.contact.lineId;
-        if (emailEl) emailEl.textContent = settings.contact.email;
-      }
-    }
-    
+
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      // Check if already added LINE friend
       const hasAddedLine = localStorage.getItem('lineAdded_' + lineId) === 'true';
       
       if (hasAddedLine) {
-        // Already added - load products
-        loadSiteSettings();
+        showShopPage();
         updateCartCount();
-        
-        // Check URL params
-        const urlParams = new URLSearchParams(window.location.search);
-        const category = urlParams.get('category');
-        
-        if (category) {
-          filterProducts(category);
-        } else {
-          renderProducts('all', 'default');
-        }
+        renderProducts();
       } else {
-        // Not added yet - directly redirect to LINE add friend page
-        // Try multiple LINE URL formats for better compatibility
-        const lineUrls = [
-          'https://line.me/ti/p/@' + lineId,
-          'https://lin.ee/' + lineId,
-          'https://social-plugins.line.me/lineit/share?url=https://line.me/ti/p/@' + lineId
-        ];
-        
-        // Open first URL, fallback to others
-        window.location.href = lineUrls[0];
+        showLinePage();
       }
     });
   </script>
