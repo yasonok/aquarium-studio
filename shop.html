@@ -258,7 +258,15 @@
         }
       } else {
         // Not added yet - directly redirect to LINE add friend page
-        window.location.href = 'https://line.me/ti/p/@' + lineId;
+        // Try multiple LINE URL formats for better compatibility
+        const lineUrls = [
+          'https://line.me/ti/p/@' + lineId,
+          'https://lin.ee/' + lineId,
+          'https://social-plugins.line.me/lineit/share?url=https://line.me/ti/p/@' + lineId
+        ];
+        
+        // Open first URL, fallback to others
+        window.location.href = lineUrls[0];
       }
     });
   </script>

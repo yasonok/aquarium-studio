@@ -233,8 +233,12 @@
     function checkLineAdded() {
       const hasAddedLine = localStorage.getItem('lineAdded_' + lineId) === 'true';
       if (!hasAddedLine) {
-        // Redirect directly to LINE add friend page
-        window.location.href = 'https://line.me/ti/p/@' + lineId;
+        // Not added yet - redirect to LINE add friend page
+        const lineUrls = [
+          'https://line.me/ti/p/@' + lineId,
+          'https://lin.ee/' + lineId
+        ];
+        window.location.href = lineUrls[0];
         return false;
       }
       return true;
@@ -356,7 +360,12 @@ ${cart.map(item => `• ${item.name} x ${item.quantity} = $${item.price * item.q
       const lineUrl = `https://line.me/ti/p/@${lineId}?${encodedMessage}`;
       
       // Open LINE directly
-      window.open(lineUrl, '_blank');
+      window.location.href = lineUrl;
+      
+      // Backup: also open in new tab
+      setTimeout(() => {
+        window.open(lineUrl, '_blank');
+      }, 500);
       
       // Copy message as backup
       navigator.clipboard.writeText(message.trim()).then(() => {
