@@ -364,7 +364,14 @@
     function addLineFriend() {
       // Open LINE add friend page
       const lineUrl = `https://line.me/ti/p/@${lineId}`;
-      window.open(lineUrl, '_blank');
+      
+      // Try to open in LINE app first
+      window.location.href = lineUrl;
+      
+      // Also try opening in new tab as backup
+      setTimeout(() => {
+        window.open(lineUrl, '_blank');
+      }, 500);
       
       // Show modal for confirmation
       document.getElementById('lineModal').classList.add('show');
