@@ -167,6 +167,8 @@ input, select, textarea {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .nav-links a {
@@ -1437,5 +1439,35 @@ input, select, textarea {
 @media (max-width: 768px) {
   .modal-content iframe {
     height: 250px;
+  }
+  
+  /* Header responsive */
+  .header-inner {
+    padding: 10px 0;
+  }
+  
+  .logo {
+    gap: 8px;
+    font-size: 1.2rem;
+  }
+  
+  .logo-icon {
+    font-size: 1.8rem;
+  }
+  
+  .nav-links {
+    gap: 4px;
+  }
+  
+  .nav-links a {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .cart-badge {
+    top: -3px;
+    right: -3px;
+    font-size: 0.65rem;
+    padding: 2px 5px;
   }
 }
