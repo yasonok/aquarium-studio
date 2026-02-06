@@ -2,7 +2,7 @@
 
 // App Configuration
 const APP_CONFIG = {
-  APP_NAME: '瑞安水族',
+  APP_NAME: 'Aquarium Studio',
   LINE_ID: 'yasonok02061',
   LINE_NOTIFY_URL: 'https://line.me/R/ti/p/@yasonok02061',
   DEFAULT_CURRENCY: 'TWD',
@@ -442,6 +442,13 @@ function getOrders() {
 }
 
 function sendLineNotification(order) {
+  // Get LINE ID from settings or use default
+  let lineId = APP_CONFIG.LINE_ID;
+  if (typeof SiteSettings !== 'undefined') {
+    const settings = SiteSettings.load();
+    lineId = settings.contact.lineId.replace('@', '');
+  }
+  
   const message = `
 🐟 Aquarium Studio 新訂單通知
 
@@ -464,17 +471,19 @@ ${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * i
   // Encode message for LINE
   const encodedMessage = encodeURIComponent(message);
   
-  // Show notification info (in production, this would send to actual LINE API)
-  console.log('LINE Notification:', message);
-  
-  // Open LINE with order message
-  const lineUrl = `https://line.me/R/ti/p/@yasonok02061?${encodedMessage}`;
-  showToast('訂單已成立！正在開啟 LINE 通知...', 'success');
-  
-  // Store for admin to see
+  // Store notification for admin
   const notifications = JSON.parse(localStorage.getItem('line_notifications') || '[]');
   notifications.push({ orderId: order.id, message: message, created_at: new Date().toISOString() });
   localStorage.setItem('line_notifications', JSON.stringify(notifications));
+  
+  // Open LINE with order message
+  const lineUrl = `https://line.me/R/ti/p/@${lineId}?${encodedMessage}`;
+  showToast('訂單已成立！正在開啟 LINE...', 'success');
+  
+  // Open LINE in new window/tab
+  setTimeout(() => {
+    window.open(lineUrl, '_blank');
+  }, 500);
 }
 
 // Mobile Menu

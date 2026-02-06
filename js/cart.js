@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeCartPage() {
   renderCart();
   setupCheckoutForm();
+  loadLineSettings();
+}
+
+function loadLineSettings() {
+  // Load LINE ID from settings
+  if (typeof SiteSettings !== 'undefined') {
+    const settings = SiteSettings.load();
+    APP_CONFIG.LINE_ID = settings.contact.lineId.replace('@', '');
+    APP_CONFIG.LINE_NOTIFY_URL = `https://line.me/R/ti/p/@${settings.contact.lineId.replace('@', '')}`;
+  }
 }
 
 function setupCheckoutForm() {
