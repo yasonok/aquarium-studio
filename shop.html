@@ -361,6 +361,15 @@
       AquariumApp.showToast('✅ 已加入 LINE 好友！現在可以購買商品了', 'success');
     }
     
+    function addLineFriend() {
+      // Open LINE add friend page
+      const lineUrl = `https://line.me/ti/p/@${lineId}`;
+      window.open(lineUrl, '_blank');
+      
+      // Show modal for confirmation
+      document.getElementById('lineModal').classList.add('show');
+    }
+    
     function requireLineForAction() {
       if (!hasAddedLine) {
         AquariumApp.showToast('請先加入 LINE 好友才能購買商品', 'warning');
