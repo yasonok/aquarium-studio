@@ -413,10 +413,17 @@ function createOrder(customerInfo) {
     return null;
   }
 
+  // Calculate total with shipping fee
+  const subtotal = getCartTotal();
+  const shippingFee = customerInfo.shippingFee || 0;
+  const total = subtotal + shippingFee;
+
   const order = {
     id: 'ORD' + Date.now(),
     items: [...cart],
-    total: getCartTotal(),
+    subtotal: subtotal,
+    shippingFee: shippingFee,
+    total: total,
     customer: customerInfo,
     status: 'pending',
     created_at: new Date().toISOString()
@@ -449,21 +456,43 @@ function sendLineNotification(order) {
     lineId = settings.contact.lineId.replace('@', '');
   }
   
+  const shippingNames = {
+    'blackcat-prepay': '黑貓宅急便 (先付款)',
+    'blackcat-cod': '黑貓宅急便 (貨到付款)',
+    'post-office': '郵局/大榮物流'
+  };
+  
+  const paymentNames = {
+    'linepay': 'LINE Pay',
+    'atm': '銀行轉帳',
+    'cod': '貨到付款',
+    'credit': '信用卡'
+  };
+  
   const message = `
 🐟 Aquarium Studio 新訂單通知
 
-訂單編號: ${order.id}
-時間: ${new Date(order.created_at).toLocaleString('zh-TW')}
+📋 訂單編號: ${order.id}
+📅 時間: ${new Date(order.created_at).toLocaleString('zh-TW')}
 
-顧客資料:
+👤 顧客資料:
 - 姓名: ${order.customer.name}
 - 電話: ${order.customer.phone}
 - 地址: ${order.customer.address}
+- LINE ID: ${order.customer.lineId || '未提供'}
 
-訂單內容:
+🚚 配送方式: ${shippingNames[order.customer.shippingMethod] || '未選擇'}
+💳 付款方式: ${paymentNames[order.customer.paymentMethod] || '未選擇'}
+
+📦 訂單內容:
 ${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * item.quantity}`).join('\n')}
 
-總金額: $${order.total}
+💰 費用:
+- 商品小計: $${order.subtotal || order.total - (order.shippingFee || 0)}
+- 運費: $${order.shippingFee || 0}
+- 總金額: $${order.total}
+
+📝 備註: ${order.customer.note || '無'}
 
 狀態: 待處理
 `;

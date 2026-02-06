@@ -43,6 +43,9 @@ function setupCheckoutForm() {
       note: document.getElementById('customer-note').value
     };
     
+    // Add shipping fee to customer info
+    customerInfo.shippingFee = selectedShipping.fee;
+    
     // Create order
     const order = AquariumApp.createOrder(customerInfo);
     

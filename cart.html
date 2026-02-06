@@ -5,6 +5,237 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>購物車 - Aquarium Studio</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .checkout-section {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .checkout-section h3 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+    
+    .form-group {
+      margin-bottom: 12px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e1e5eb;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .option-card {
+      display: block;
+      padding: 15px;
+      border: 2px solid #e1e5eb;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .option-card:hover {
+      border-color: #667eea;
+      background: #f8faff;
+    }
+    
+    .option-card.selected {
+      border-color: #667eea;
+      background: #f0f4ff;
+    }
+    
+    .option-card .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+    
+    .option-card .option-desc {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .option-card .option-price {
+      font-weight: bold;
+      color: #667eea;
+    }
+    
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .payment-btn {
+      padding: 15px;
+      border: 2px solid #e1e5eb;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    
+    .payment-btn:hover {
+      border-color: #667eea;
+    }
+    
+    .payment-btn.selected {
+      border-color: #667eea;
+      background: #f0f4ff;
+    }
+    
+    .payment-btn .icon {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    
+    .payment-btn .name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .order-summary-card {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .order-summary-card h4 {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    
+    .order-item-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e1e5eb;
+    }
+    
+    .order-item-row:last-child {
+      border-bottom: none;
+    }
+    
+    .order-total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-top: 2px solid #667eea;
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    
+    .step {
+      display: flex;
+      align-items: center;
+      color: #999;
+    }
+    
+    .step.active {
+      color: #667eea;
+    }
+    
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #e1e5eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    
+    .step.active .step-number {
+      background: #667eea;
+      color: white;
+    }
+    
+    .step-line {
+      width: 50px;
+      height: 2px;
+      background: #e1e5eb;
+      margin: 0 10px;
+    }
+    
+    .step.active .step-line {
+      background: #667eea;
+    }
+    
+    .city-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .city-btn {
+      padding: 10px;
+      border: 2px solid #e1e5eb;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    
+    .city-btn.selected {
+      border-color: #667eea;
+      background: #f0f4ff;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -21,7 +252,6 @@
           <a href="shop.html">商店</a>
           <a href="cart.html" class="active">🛒 購物車</a>
           <a href="login.html">👤 會員</a>
-          <a href="admin.html">管理</a>
         </nav>
         
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
@@ -29,104 +259,187 @@
     </div>
   </header>
 
-  <!-- Cart Section -->
-  <section class="cart-section">
+  <!-- Checkout Section -->
+  <section class="section">
     <div class="container">
-      <div class="section-header">
-        <h2>🛒 購物車</h2>
-        <p>確認您的訂單內容</p>
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step active">
+          <span class="step-number">1</span>
+          <span>填寫資料</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <span>確認訂單</span>
+        </div>
       </div>
       
       <div class="cart-container">
-        <div class="cart-header">
-          <span>商品</span>
-          <span>單價</span>
-          <span>數量</span>
-          <span>小計</span>
-          <span></span>
+        <!-- Cart Items -->
+        <div class="checkout-section">
+          <h3>📦 訂單商品</h3>
+          <div id="checkout-items">
+            <div class="spinner"></div>
+          </div>
         </div>
         
-        <div id="cart-items">
-          <!-- Cart items loaded dynamically -->
-          <div class="spinner"></div>
-        </div>
-        
-        <div id="cart-summary" style="display: none;">
-          <div class="cart-summary">
-            <div class="cart-total-row">
-              <span>訂單總金額</span>
-              <span class="total" id="cart-total">$0</span>
+        <!-- Customer Info -->
+        <div class="checkout-section">
+          <h3>👤 購買人資訊</h3>
+          
+          <div class="form-group">
+            <label>姓名 *</label>
+            <input type="text" id="customer-name" placeholder="請輸入您的姓名" required>
+          </div>
+          
+          <div class="form-group">
+            <label>連絡電話 *</label>
+            <input type="tel" id="customer-phone" placeholder="0912-345-678" required>
+            <small style="color: #999; font-size: 0.8rem;">宅配人員將以此電話聯繫</small>
+          </div>
+          
+          <div class="form-group">
+            <label>LINE ID</label>
+            <input type="text" id="customer-lineid" placeholder="@yasonok02061">
+          </div>
+          
+          <div class="form-group">
+            <label>送貨地址 *</label>
+            <div class="city-selector">
+              <select id="customer-city" onchange="updateDistricts()">
+                <option value="">選擇縣市</option>
+                <option value="台北市">台北市</option>
+                <option value="新北市">新北市</option>
+                <option value="桃園市">桃園市</option>
+                <option value="台中市">台中市</option>
+                <option value="台南市">台南市</option>
+                <option value="高雄市">高雄市</option>
+                <option value="基隆市">基隆市</option>
+                <option value="新竹市">新竹市</option>
+                <option value="嘉義市">嘉義市</option>
+                <option value="新竹縣">新竹縣</option>
+                <option value="苗栗縣">苗栗縣</option>
+                <option value="彰化縣">彰化縣</option>
+                <option value="南投縣">南投縣</option>
+                <option value="雲林縣">雲林縣</option>
+                <option value="屏東縣">屏東縣</option>
+                <option value="宜蘭縣">宜蘭縣</option>
+                <option value="花蓮縣">花蓮縣</option>
+                <option value="台東縣">台東縣</option>
+                <option value="澎湖縣">澎湖縣</option>
+                <option value="金門縣">金門縣</option>
+                <option value="連江縣">連江縣</option>
+              </select>
+              <select id="customer-district">
+                <option value="">選擇鄉鎮市區</option>
+              </select>
             </div>
-            <div class="cart-actions">
-              <a href="shop.html" class="btn btn-secondary">繼續購物</a>
-              <button class="btn btn-primary" onclick="openCheckoutModal()">
-                💬 前往結帳 (LINE)
-              </button>
+            <input type="text" id="customer-address" placeholder="路/巷/弄/號/樓" style="margin-top: 10px;" required>
+          </div>
+          
+          <div class="form-group">
+            <label>郵遞區號</label>
+            <input type="text" id="customer-zipcode" placeholder="100" readonly>
+          </div>
+        </div>
+        
+        <!-- Shipping Method -->
+        <div class="checkout-section">
+          <h3>🚚 配送方式</h3>
+          
+          <div class="option-card selected" onclick="selectShipping('blackcat-prepay', 200)">
+            <div class="option-header">
+              <span>🐱 黑貓宅急便 - 先付款</span>
+              <span class="option-price">$200</span>
+            </div>
+            <div class="option-desc">有購買活體請選此選項</div>
+          </div>
+          
+          <div class="option-card" onclick="selectShipping('blackcat-cod', 250)">
+            <div class="option-header">
+              <span>🐱 黑貓宅急便 - 貨到付款</span>
+              <span class="option-price">$250</span>
+            </div>
+            <div class="option-desc">已購買活體，貨到付款</div>
+          </div>
+          
+          <div class="option-card" onclick="selectShipping('post-office', 100)">
+            <div class="option-header">
+              <span>📮 郵局/大榮物流 - 器材專用</span>
+              <span class="option-price">$100</span>
+            </div>
+            <div class="option-desc">無購買活體，只有器材</div>
+          </div>
+        </div>
+        
+        <!-- Payment Method -->
+        <div class="checkout-section">
+          <h3>💳 付款方式</h3>
+          
+          <div class="payment-grid">
+            <div class="payment-btn selected" onclick="selectPayment('linepay')">
+              <div class="icon">💚</div>
+              <div class="name">LINE Pay</div>
+            </div>
+            <div class="payment-btn" onclick="selectPayment('atm')">
+              <div class="icon">🏦</div>
+              <div class="name">銀行轉帳</div>
+            </div>
+            <div class="payment-btn" onclick="selectPayment('cod')">
+              <div class="icon">💵</div>
+              <div class="name">貨到付款</div>
+            </div>
+            <div class="payment-btn" onclick="selectPayment('credit')">
+              <div class="icon">💳</div>
+              <div class="name">信用卡</div>
+            </div>
+          </div>
+          
+          <div id="atm-info" style="display: none; margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+            <p style="margin-bottom: 10px;"><strong>銀行轉帳資訊：</strong></p>
+            <p>銀行代碼：808</p>
+            <p>帳號：1234-5678-9012</p>
+            <p>戶名：Aquarium Studio</p>
+            <div class="form-group" style="margin-top: 15px;">
+              <label>轉帳帳號後5碼 *</label>
+              <input type="text" id="atm-last5" placeholder="請輸入後5碼" maxlength="5">
             </div>
           </div>
         </div>
+        
+        <!-- Order Summary -->
+        <div class="checkout-section">
+          <h3>📋 訂單摘要</h3>
+          
+          <div class="order-summary-card">
+            <h4>商品金額</h4>
+            <div id="order-items"></div>
+          </div>
+          
+          <div class="order-summary-card">
+            <div class="order-item-row">
+              <span>商品小計</span>
+              <span id="subtotal">$0</span>
+            </div>
+            <div class="order-item-row">
+              <span>運費</span>
+              <span id="shipping-fee">$0</span>
+            </div>
+            <div class="order-total-row">
+              <span>訂單總金額</span>
+              <span id="order-total" style="color: #667eea;">$0</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button class="btn btn-primary btn-lg btn-block" onclick="submitOrder()" style="margin-top: 20px;">
+          💬 確認訂單並開啟 LINE
+        </button>
       </div>
     </div>
   </section>
-
-  <!-- Checkout Modal -->
-  <div id="checkout-modal" class="modal-overlay" style="display: none;">
-    <div class="modal" style="max-width: 650px;">
-      <div class="modal-header">
-        <h3 class="modal-title">📋 結帳資料</h3>
-        <button class="modal-close" onclick="closeCheckout()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div style="background: var(--gray-100); padding: 20px; border-radius: var(--border-radius); margin-bottom: 25px;">
-          <h4 style="margin-bottom: 15px;">💡 結帳說明</h4>
-          <p style="color: var(--gray-600); font-size: 0.95rem; line-height: 1.7;">
-            1. 填寫您的聯絡資料<br>
-            2. 點擊「確認訂單」<br>
-            3. 系統將開啟 LINE，您可以直接與管理員聯繫<br>
-            4. 管理員會與您確認訂單並安排配送
-          </p>
-        </div>
-        
-        <form id="checkout-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="customer-name">姓名 *</label>
-              <input type="text" id="customer-name" required placeholder="請輸入您的姓名">
-            </div>
-            <div class="form-group">
-              <label for="customer-phone">電話 *</label>
-              <input type="tel" id="customer-phone" required placeholder="0912-345-678">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="customer-address">送貨地址 *</label>
-            <input type="text" id="customer-address" required placeholder="請輸入完整送貨地址">
-          </div>
-          <div class="form-group">
-            <label for="customer-note">備註</label>
-            <textarea id="customer-note" placeholder="有任何特殊需求請告訴我們，例如：希望配送時間"></textarea>
-          </div>
-          
-          <div style="background: var(--white); border: 2px solid var(--gray-200); border-radius: var(--border-radius); padding: 20px; margin-bottom: 25px;">
-            <h4 style="margin-bottom: 15px;">📦 訂單摘要</h4>
-            <div id="checkout-summary"></div>
-            <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--gray-200); font-weight: bold; font-size: 1.2rem;">
-              <span>總金額</span>
-              <span style="color: var(--primary-color);" id="checkout-total">$0</span>
-            </div>
-          </div>
-          
-          <button type="submit" class="btn btn-primary btn-lg btn-block">
-            💬 確認訂單並開啟 LINE
-          </button>
-          
-          <p style="text-align: center; margin-top: 15px; color: var(--gray-500); font-size: 0.9rem;">
-            點擊上方按鈕後將開啟 LINE 與管理員聯繫
-          </p>
-        </form>
-      </div>
-    </div>
-  </div>
 
   <!-- Order Confirmation Modal -->
   <div id="order-modal" class="modal-overlay" style="display: none;">
@@ -135,9 +448,7 @@
         <h3 class="modal-title">✅ 訂單已成立</h3>
         <button class="modal-close" onclick="closeOrderModal()">&times;</button>
       </div>
-      <div class="modal-body" id="order-modal-content">
-        <!-- Order confirmation content loaded dynamically -->
-      </div>
+      <div class="modal-body" id="order-modal-content"></div>
     </div>
   </div>
 
@@ -152,65 +463,236 @@
 
   <script src="js/app.js"></script>
   <script src="js/settings.js"></script>
-  <script src="js/cart.js"></script>
   <script>
+    // Taiwan districts data
+    const taiwanDistricts = {
+      '台北市': ['中正區', '大同區', '中山區', '松山區', '大安區', '萬華區', '信義區', '士林區', '北投區', '內湖區', '南港區', '文山區'],
+      '新北市': ['板橋區', '新莊區', '中和區', '永和區', '土城區', '樹林區', '三峽區', '鶯歌區', '三重區', '蘆洲區', '五股區', '泰山區', '林口區', '淡水區', '汐止區', '瑞芳區', '新店區', '深坑區', '石碇區', '坪林區', '烏來區'],
+      '桃園市': ['桃園區', '中壢區', '平鎮區', '八德區', '楊梅區', '蘆竹區', '龜山區', '龍潭區', '大溪區', '大園區', '觀音區', '新屋區', '楊梅區', '富岡區', '復興區'],
+      '台中市': ['中區', '東區', '南區', '西區', '北區', '北屯區', '西屯區', '南屯區', '太平區', '大里區', '霧峰區', '烏日區', '豐原區', '后里區', '東勢區', '石岡區', '新社區', '潭子區', '大雅區', '神岡區', '大肚區', '沙鹿區', '龍井區', '梧棲區', '清水區', '大甲區', '外埔區', '大安區'],
+      '台南市': ['中西區', '東區', '南區', '北區', '安平區', '安南區', '永康區', '歸仁區', '新化區', '左鎮區', '玉井區', '楠西區', '南化區', '仁德區', '關廟區', '龍崎區', '官田區', '麻豆區', '佳里區', '西港區', '七股區', '將軍區', '學甲區', '北門區', '新營區', '後壁區', '白河區', '東山區', '六甲區', '下營區', '柳營區', '鹽水區', '善化區', '大內區', '山上區', '新市區', '安定區'],
+      '高雄市': ['新興區', '前金區', '苓雅區', '鹽埕區', '鼓山區', '旗津區', '前鎮區', '三民區', '左營區', '楠梓區', '小港區', '鳳山區', '林園區', '大寮區', '大樹區', '大社區', '仁武區', '鳥松區', '岡山區', '橋頭區', '燕巢區', '田寮區', '阿蓮區', '路竹區', '湖內區', '茄萣區', '永安區', '彌陀區', '梓官區', '旗山區', '美濃區', '六龜區', '甲仙區', '杉林區', '內門區', '茂林區', '桃源區', '那瑪夏區'],
+      '基隆市': ['中正區', '七堵區', '暖暖區', '仁愛區', '中山區', '安樂區', '信義區'],
+      '新竹市': ['東區', '北區', '香山區'],
+      '嘉義市': ['東區', '西區'],
+      '新竹縣': ['竹北市', '竹東鎮', '新埔鎮', '關西鎮', '湖口鄉', '新豐鄉', '芎林鄉', '橫山鄉', '北埔鄉', '峨眉鄉', '寶山鄉', '尖石鄉', '五峰鄉'],
+      '苗栗縣': ['苗栗市', '頭份市', '苑裡鎮', '通霄鎮', '竹南鎮', '後龍鎮', '卓蘭鎮', '大湖鄉', '公館鄉', '銅鑼鄉', '南庄鄉', '頭屋鄉', '三義鄉', '西湖鄉', '造橋鄉', '三灣鄉', '獅潭鄉', '泰安鄉'],
+      '彰化縣': ['彰化市', '員林市', '和美鎮', '鹿港鎮', '溪湖鎮', '二林鎮', '田中鎮', '北斗鎮', '花壇鄉', '芬園鄉', '大村鄉', '永靖鄉', '伸港鄉', '線西鄉', '秀水鄉', '埔心鄉', '埔鹽鄉', '大城乡', '芳苑鄉', '竹塘鄉', '埤頭鄉', '二水鄉', '田尾鄉', '溪州鄉'],
+      '南投縣': ['南投市', '埔里鎮', '草屯鎮', '竹山鎮', '集集鎮', '水里鄉', '魚池鄉', '信義鄉', '仁愛鄉', '名間鄉', '中寮鄉', '鹿谷鄉'],
+      '雲林縣': ['斗六市', '斗南鎮', '虎尾鎮', '西螺鎮', '土庫鎮', '北港鎮', '莿桐鄉', '林內鄉', '古坑鄉', '大埤鄉', '表彰鄉', '二崙鄉', '崙背鄉', '麥寮鄉', '東勢鄉', '褒忠鄉', '台西鄉', '元長鄉', '四湖鄉', '口湖鄉', '水林鄉'],
+      '屏東縣': ['屏東市', '潮州鎮', '東港鎮', '恆春鎮', '萬丹鄉', '長治鄉', '麟洛鄉', '九如鄉', '里港鄉', '鹽埔鄉', '高樹鄉', '萬巒鄉', '內埔鄉', '竹田鄉', '新埤鄉', '枋寮鄉', '新園鄉', '崁頂鄉', '林邊鄉', '南州鄉', '佳冬鄉', '琉球鄉', '車城鄉', '滿州鄉', '枋山鄉', '三地門鄉', '霧台鄉', '瑪家鄉', '泰武鄉', '來義鄉', '春日鄉', '獅子鄉', '牡丹鄉'],
+      '宜蘭縣': ['宜蘭市', '羅東鎮', '蘇澳鎮', '頭城鎮', '礁溪鄉', '壯圍鄉', '員山鄉', '冬山鄉', '五結鄉', '三星鄉', '大同鄉', '南澳鄉'],
+      '花蓮縣': ['花蓮市', '鳳林鎮', '玉里鎮', '新城鄉', '吉安鄉', '壽豐鄉', '秀林鄉', '新城乡', '瑞穗鄉', '萬榮鄉', '光復鄉', '豐濱鄉', '卓溪鄉'],
+      '台東縣': ['台東市', '成功鎮', '關山鎮', '卑南鄉', '鹿野鄉', '池上鄉', '東河鄉', '長濱鄉', '太麻里鄉', '金峰鄉', '大武鄉', '綠島鄉', '海端鄉', '延平鄉', '達仁鄉', '蘭嶼鄉'],
+      '澎湖縣': ['馬公市', '湖西鄉', '白沙鄉', '西嶼鄉', '望安鄉', '七美鄉'],
+      '金門縣': ['金城鎮', '金湖鎮', '金沙鎮', '金寧鄉', '烈嶼鄉', '烏坵鄉'],
+      '連江縣': ['南竿鄉', '北竿鄉', '莒光鄉', '東引鄉']
+    };
+    
+    const zipcodes = {
+      '台北市': '100', '新北市': '220', '桃園市': '330', '台中市': '400', '台南市': '700', '高雄市': '800',
+      '基隆市': '200', '新竹市': '300', '嘉義市': '600'
+    };
+    
+    let selectedShipping = { method: 'blackcat-prepay', fee: 200 };
+    let selectedPayment = 'linepay';
+    
     function toggleMobileMenu() {
       const navLinks = document.querySelector('.nav-links');
       const menuBtn = document.querySelector('.mobile-menu-btn');
       navLinks.classList.toggle('active');
       menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
     }
-
-    function openCheckoutModal() {
+    
+    function updateDistricts() {
+      const city = document.getElementById('customer-city').value;
+      const districtSelect = document.getElementById('customer-district');
+      const zipcodeInput = document.getElementById('customer-zipcode');
+      
+      districtSelect.innerHTML = '<option value="">選擇鄉鎮市區</option>';
+      
+      if (city && taiwanDistricts[city]) {
+        taiwanDistricts[city].forEach(district => {
+          const option = document.createElement('option');
+          option.value = district;
+          option.textContent = district;
+          districtSelect.appendChild(option);
+        });
+        
+        // Set zipcode (approximate)
+        if (zipcodes[city]) {
+          zipcodeInput.value = zipcodes[city];
+        }
+      }
+    }
+    
+    function selectShipping(method, fee) {
+      selectedShipping = { method, fee };
+      
+      document.querySelectorAll('.checkout-section .option-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      
+      // Update shipping fee display
+      document.getElementById('shipping-fee').textContent = '$' + fee;
+      updateTotal();
+    }
+    
+    function selectPayment(method) {
+      selectedPayment = method;
+      
+      document.querySelectorAll('.payment-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      
+      // Show/hide ATM info
+      const atmInfo = document.getElementById('atm-info');
+      if (method === 'atm') {
+        atmInfo.style.display = 'block';
+      } else {
+        atmInfo.style.display = 'none';
+      }
+    }
+    
+    function updateTotal() {
       const cart = AquariumApp.getCart();
+      const subtotal = AquariumApp.getCartTotal();
+      const total = subtotal + selectedShipping.fee;
+      
+      document.getElementById('subtotal').textContent = '$' + subtotal;
+      document.getElementById('order-total').textContent = '$' + total;
+    }
+    
+    function renderOrderItems() {
+      const cart = AquariumApp.getCart();
+      const container = document.getElementById('order-items');
+      const itemsContainer = document.getElementById('checkout-items');
+      
       if (cart.length === 0) {
-        AquariumApp.showToast('購物車是空的', 'error');
+        container.innerHTML = '<p style="text-align: center; color: #999;">購物車是空的</p>';
+        itemsContainer.innerHTML = '<p style="text-align: center; color: #999;">購物車是空的</p>';
         return;
       }
       
-      renderCheckoutSummary();
-      document.getElementById('checkout-modal').style.display = 'flex';
-    }
-
-    function closeCheckout() {
-      document.getElementById('checkout-modal').style.display = 'none';
-    }
-
-    function renderCheckoutSummary() {
-      const cart = AquariumApp.getCart();
-      const summary = document.getElementById('checkout-summary');
-      const total = document.getElementById('checkout-total');
-      
-      if (!summary || !total) return;
-      
-      summary.innerHTML = cart.map(item => `
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-200);">
+      const html = cart.map(item => `
+        <div class="order-item-row">
           <span>${item.name} x ${item.quantity}</span>
           <span>$${item.price * item.quantity}</span>
         </div>
       `).join('');
       
-      total.textContent = `$${AquariumApp.getCartTotal()}`;
+      container.innerHTML = html;
+      itemsContainer.innerHTML = cart.map(item => `
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+          <div>
+            <strong>${item.name}</strong>
+            <div style="font-size: 0.85rem; color: #666;">數量: ${item.quantity}</div>
+          </div>
+          <span style="font-weight: bold;">$${item.price * item.quantity}</span>
+        </div>
+      `).join('');
+      
+      updateTotal();
     }
-
+    
+    function submitOrder() {
+      const name = document.getElementById('customer-name').value;
+      const phone = document.getElementById('customer-phone').value;
+      const city = document.getElementById('customer-city').value;
+      const district = document.getElementById('customer-district').value;
+      const address = document.getElementById('customer-address').value;
+      const lineId = document.getElementById('customer-lineid').value;
+      
+      if (!name || !phone || !city || !district || !address) {
+        AquariumApp.showToast('請填寫完整資料', 'error');
+        return;
+      }
+      
+      const fullAddress = city + district + address;
+      
+      const customerInfo = {
+        name,
+        phone,
+        address: fullAddress,
+        lineId,
+        shippingMethod: selectedShipping.method,
+        paymentMethod: selectedPayment,
+        note: document.getElementById('customer-note')?.value || ''
+      };
+      
+      const order = AquariumApp.createOrder(customerInfo);
+      
+      if (order) {
+        // Save to member if logged in
+        if (typeof MemberSystem !== 'undefined' && MemberSystem.isLoggedIn()) {
+          MemberSystem.saveOrder(order, MemberSystem.getCurrentUser().uid);
+        }
+        
+        showOrderConfirmation(order);
+      } else {
+        AquariumApp.showToast('訂單建立失敗', 'error');
+      }
+    }
+    
+    function showOrderConfirmation(order) {
+      const modal = document.getElementById('order-modal');
+      const content = document.getElementById('order-modal-content');
+      
+      const shippingNames = {
+        'blackcat-prepay': '黑貓宅急便 (先付款)',
+        'blackcat-cod': '黑貓宅急便 (貨到付款)',
+        'post-office': '郵局/大榮物流'
+      };
+      
+      const paymentNames = {
+        'linepay': 'LINE Pay',
+        'atm': '銀行轉帳',
+        'cod': '貨到付款',
+        'credit': '信用卡'
+      };
+      
+      content.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 4rem; margin-bottom: 20px;">✅</div>
+          <h2 style="color: #198754; margin-bottom: 15px;">訂單已成立！</h2>
+          <p style="color: #6c757d; margin-bottom: 10px;">訂單編號: <strong>${order.id}</strong></p>
+          
+          <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: left; margin: 20px 0;">
+            <p><strong>姓名:</strong> ${order.customer.name}</p>
+            <p><strong>電話:</strong> ${order.customer.phone}</p>
+            <p><strong>地址:</strong> ${order.customer.address}</p>
+            <p><strong>配送:</strong> ${shippingNames[order.customer.shippingMethod]}</p>
+            <p><strong>付款:</strong> ${paymentNames[order.customer.paymentMethod]}</p>
+          </div>
+          
+          <p style="font-size: 1.2rem; font-weight: bold; margin: 20px 0;">
+            總金額: <span style="color: #667eea;">$${order.total}</span>
+          </p>
+          
+          <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 20px;">
+            管理員將透過 LINE 與您聯繫確認訂單
+          </p>
+          
+          <a href="shop.html" class="btn btn-primary btn-lg" style="margin-right: 10px;">繼續購物</a>
+          <button onclick="closeOrderModal()" class="btn btn-secondary btn-lg">關閉</button>
+        </div>
+      `;
+      
+      modal.style.display = 'flex';
+    }
+    
     function closeOrderModal() {
       document.getElementById('order-modal').style.display = 'none';
     }
-
-    // Close modal on backdrop click
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-      modal.addEventListener('click', function(e) {
-        if (e.target === this) {
-          this.style.display = 'none';
-        }
-      });
-    });
     
-    // Load site name from settings
+    // Load site name
     function loadSiteName() {
       if (typeof SiteSettings !== 'undefined') {
         const settings = SiteSettings.load();
-        // Update logo text in header
         const logoText = document.querySelector('.logo-text');
         if (logoText) {
           logoText.innerHTML = settings.site.name;
@@ -220,6 +702,7 @@
     
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
+      renderOrderItems();
       loadSiteName();
     });
   </script>
