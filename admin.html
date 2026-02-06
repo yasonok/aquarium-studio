@@ -21,18 +21,85 @@
             padding-bottom: 80px;
         }
         
+        /* 導航列 */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
+            padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
         }
         
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .back-home:hover {
+            background: rgba(255,255,255,0.5);
+        }
+        
         .header h1 {
             font-size: 1.5rem;
             margin-bottom: 5px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-title {
+            display: flex;
+            flex-direction: column;
         }
         
         .header p {
@@ -350,8 +417,17 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <h1>🎛️ 商品管理</h1>
-        <p>Aquarium Studio - WordPress 風格後台</p>
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span>🐟</span>
+                <span>Aquarium Studio</span>
+            </a>
+            <div style="display: flex; gap: 10px;">
+                <a href="shop.html" class="nav-links" style="display: none;">商店</a>
+                <a href="cart.html" class="nav-links" style="display: none;">購物車</a>
+                <a href="index.html" class="back-home">🏠 回到首頁</a>
+            </div>
+        </div>
     </header>
     
     <div class="container">
