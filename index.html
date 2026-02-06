@@ -9,7 +9,7 @@
     /* Header */
     .header {
       background: white;
-      padding: 12px 20px;
+      padding: 10px 15px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       position: sticky;
       top: 0;
@@ -27,16 +27,17 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       text-decoration: none;
+      flex-shrink: 0;
     }
     
     .logo-icon {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
     }
     
     .logo-text {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: bold;
       color: #333;
     }
@@ -47,16 +48,19 @@
     
     .nav-links {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
     
     .nav-links a {
-      padding: 10px 18px;
-      border-radius: 25px;
+      padding: 8px 12px;
+      border-radius: 20px;
       text-decoration: none;
       color: #666;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 500;
+      white-space: nowrap;
       transition: all 0.3s;
     }
     
@@ -76,26 +80,17 @@
       right: -5px;
       background: #ff4757;
       color: white;
-      font-size: 0.7rem;
-      padding: 2px 6px;
+      font-size: 0.65rem;
+      padding: 2px 5px;
       border-radius: 10px;
-      min-width: 18px;
+      min-width: 14px;
       text-align: center;
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 5px 10px;
     }
     
     /* Hero */
     .hero {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      padding: 50px 0;
+      padding: 40px 0;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -117,125 +112,127 @@
       z-index: 1;
       max-width: 800px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 15px;
     }
     
     .hero h1 {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       color: white;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 15px;
+      gap: 10px;
     }
     
     .hero-icon {
-      font-size: 3rem;
+      font-size: 2.5rem;
     }
     
     .hero p {
       color: rgba(255,255,255,0.85);
-      font-size: 1.1rem;
-      margin-bottom: 25px;
-      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
     }
     
     .hero-buttons {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
     }
     
     /* Categories */
     .categories-section {
-      padding: 60px 0;
+      padding: 40px 0;
       background: #f8f9fa;
     }
     
     .categories-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      margin-top: 30px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 20px;
     }
     
     .category-card {
       background: white;
-      padding: 25px 15px;
-      border-radius: 16px;
+      padding: 15px 10px;
+      border-radius: 12px;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     
     .category-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
     }
     
     .category-icon {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      margin-bottom: 8px;
       display: block;
     }
     
     .category-name {
       font-weight: 600;
+      font-size: 0.85rem;
       color: #333;
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
     
     .category-count {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: #999;
     }
     
     /* Products */
     .section {
-      padding: 60px 0;
+      padding: 40px 0;
     }
     
     .section-header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
     
     .section-header h2 {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: #333;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     
     .section-header p {
       color: #666;
+      font-size: 0.9rem;
     }
     
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
     
     .product-card {
       background: white;
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
       transition: all 0.3s;
     }
     
     .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
     
     .product-image-wrapper {
       position: relative;
-      padding-top: 75%;
+      padding-top: 70%;
       background: #f5f6fa;
     }
     
@@ -250,11 +247,11 @@
     
     .product-badge {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
+      top: 8px;
+      left: 8px;
+      padding: 4px 10px;
+      border-radius: 15px;
+      font-size: 0.75rem;
       font-weight: 600;
     }
     
@@ -264,46 +261,46 @@
     }
     
     .product-info {
-      padding: 20px;
+      padding: 15px;
     }
     
     .product-category {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #667eea;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     
     .product-name {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #333;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     
     .product-description {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #666;
-      margin-bottom: 15px;
-      line-height: 1.5;
+      margin-bottom: 12px;
+      line-height: 1.4;
     }
     
     .product-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
     
     .product-price {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: bold;
       color: #667eea;
     }
     
     .product-stock {
-      font-size: 0.85rem;
-      padding: 4px 10px;
-      border-radius: 10px;
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 8px;
       background: #e8f5e9;
       color: #4caf50;
     }
@@ -322,27 +319,28 @@
     .footer {
       background: #1a1a2e;
       color: white;
-      padding: 50px 0 20px;
+      padding: 40px 0 20px;
     }
     
     .footer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 25px;
+      margin-bottom: 25px;
     }
     
     .footer-section h3 {
-      margin-bottom: 15px;
-      font-size: 1.1rem;
+      margin-bottom: 12px;
+      font-size: 1rem;
     }
     
     .footer-section p,
     .footer-section a {
       color: rgba(255,255,255,0.7);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: block;
       text-decoration: none;
+      font-size: 0.9rem;
       transition: color 0.3s;
     }
     
@@ -352,24 +350,58 @@
     
     .footer-bottom {
       text-align: center;
-      padding-top: 20px;
+      padding-top: 15px;
       border-top: 1px solid rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.5);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
     
     /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 480px) {
+      .header {
+        padding: 8px 12px;
+      }
+      
+      .logo-text {
+        font-size: 1rem;
+      }
+      
+      .nav-links {
+        gap: 4px;
+      }
+      
+      .nav-links a {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+      
+      .hero {
+        padding: 30px 0;
+      }
+      
       .hero h1 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
       }
       
       .hero-icon {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
       
       .categories-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      
+      .category-card {
+        padding: 12px 8px;
+      }
+      
+      .category-icon {
+        font-size: 1.8rem;
+      }
+      
+      .category-name {
+        font-size: 0.75rem;
       }
     }
   </style>
@@ -385,12 +417,13 @@
         </a>
         
         <nav class="nav-links">
-          <a href="index.html" class="active">首頁</a>
+          <a href="index.html">首頁</a>
           <a href="shop.html">商店</a>
           <a href="cart.html" class="cart-icon">
             🛒 購物車
             <span class="cart-badge" id="cartCount">0</span>
           </a>
+          <a href="admin.html">管理</a>
         </nav>
       </div>
     </div>
@@ -403,7 +436,7 @@
         <span class="hero-icon">🐠</span>
         Aquarium Studio
       </h1>
-      <p>專業孔雀魚養殖與販售 | 精選優質品種 | 讓您輕鬆擁有美麗的水族世界</p>
+      <p>專業孔雀魚養殖與販售 | 精選優質品種</p>
       <div class="hero-buttons">
         <a href="shop.html" class="btn btn-primary btn-lg">開始選購</a>
         <a href="shop.html#categories" class="btn btn-secondary btn-lg">查看分類</a>
@@ -423,32 +456,26 @@
         <div class="category-card" onclick="filterByCategory('紅色系')">
           <span class="category-icon">🔴</span>
           <span class="category-name">紅色系</span>
-          <span class="category-count">經典熱銷</span>
         </div>
         <div class="category-card" onclick="filterByCategory('黑色系')">
           <span class="category-icon">⚫</span>
           <span class="category-name">黑色系</span>
-          <span class="category-count">優雅神秘</span>
         </div>
         <div class="category-card" onclick="filterByCategory('特殊系')">
           <span class="category-icon">🌈</span>
           <span class="category-name">特殊系</span>
-          <span class="category-count">獨特花紋</span>
         </div>
         <div class="category-card" onclick="filterByCategory('稀有系')">
           <span class="category-icon">💎</span>
           <span class="category-name">稀有系</span>
-          <span class="category-count">收藏首選</span>
         </div>
         <div class="category-card" onclick="filterByCategory('藍色系')">
           <span class="category-icon">🔵</span>
           <span class="category-name">藍色系</span>
-          <span class="category-count">清新脫俗</span>
         </div>
         <div class="category-card" onclick="filterByCategory('金色系')">
           <span class="category-icon">🟡</span>
           <span class="category-name">金色系</span>
-          <span class="category-count">富貴吉祥</span>
         </div>
       </div>
     </div>
@@ -459,14 +486,14 @@
     <div class="container">
       <div class="section-header">
         <h2>✨ 精選商品</h2>
-        <p>我們嚴選最優質的孔雀魚，適合各種水族愛好者</p>
+        <p>我們嚴選最優質的孔雀魚</p>
       </div>
       
       <div class="product-grid" id="featured-grid">
         <div class="spinner"></div>
       </div>
       
-      <div style="text-align: center; margin-top: 40px;">
+      <div style="text-align: center; margin-top: 30px;">
         <a href="shop.html" class="btn btn-outline btn-lg">查看全部商品 →</a>
       </div>
     </div>
@@ -479,13 +506,11 @@
         <div class="footer-section">
           <h3>🐟 Aquarium Studio</h3>
           <p>專業孔雀魚養殖與販售</p>
-          <p>用心照顧每一隻魚</p>
         </div>
         <div class="footer-section">
           <h3>📞 聯絡我們</h3>
           <p id="footer-lineId">LINE: @yasonok02061</p>
           <p id="footer-phone">電話: (02) 1234-5678</p>
-          <p id="footer-email">yasonok@hotmail.com</p>
         </div>
         <div class="footer-section">
           <h3>🔗 快速連結</h3>
@@ -503,7 +528,6 @@
   <script src="js/app.js"></script>
   <script src="js/settings.js"></script>
   <script>
-    // Load featured products (first 4)
     document.addEventListener('DOMContentLoaded', function() {
       renderFeaturedProducts();
       loadFooterInfo();
@@ -532,7 +556,7 @@
 
     function createProductCard(product) {
       const stockClass = product.stock <= 0 ? 'out' : product.stock <= 5 ? 'low' : '';
-      const stockText = product.stock <= 0 ? '缺貨中' : product.stock <= 5 ? `僅剩 ${product.stock} 隻` : `庫存 ${product.stock} 隻`;
+      const stockText = product.stock <= 0 ? '缺貨中' : product.stock <= 5 ? `僅剩 ${product.stock}` : `庫存 ${product.stock}`;
       const btnDisabled = product.stock <= 0 ? 'disabled' : '';
       const btnText = product.stock <= 0 ? '缺貨' : '加入購物車';
 
@@ -555,7 +579,7 @@
             </div>
             <button class="btn btn-primary product-btn add-cart" 
                     onclick="AquariumApp.addToCart(${product.id}, 1)" 
-                    ${btnDisabled}>
+                    ${btnDisabled} style="width: 100%;">
               🛒 ${btnText}
             </button>
           </div>
@@ -565,13 +589,6 @@
 
     function filterByCategory(category) {
       window.location.href = `shop.html?category=${encodeURIComponent(category)}`;
-    }
-
-    function toggleMobileMenu() {
-      const navLinks = document.querySelector('.nav-links');
-      const menuBtn = document.querySelector('.mobile-menu-btn');
-      navLinks.classList.toggle('active');
-      menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
     }
     
     function updateCartCount() {
@@ -587,11 +604,9 @@
         const settings = SiteSettings.load();
         const phoneEl = document.getElementById('footer-phone');
         const lineIdEl = document.getElementById('footer-lineId');
-        const emailEl = document.getElementById('footer-email');
         
         if (phoneEl) phoneEl.textContent = '電話: ' + settings.contact.phone;
         if (lineIdEl) lineIdEl.textContent = 'LINE: ' + settings.contact.lineId;
-        if (emailEl) emailEl.textContent = settings.contact.email;
       }
     }
   </script>
