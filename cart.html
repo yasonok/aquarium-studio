@@ -600,6 +600,14 @@
     }
     
     function submitOrder() {
+      // Check if LINE has been added
+      const hasAddedLine = localStorage.getItem('lineAdded_yasonok02061') === 'true';
+      if (!hasAddedLine) {
+        AquariumApp.showToast('請先加入 LINE 好友才能結帳！', 'warning');
+        window.location.href = 'shop.html';
+        return;
+      }
+      
       const name = document.getElementById('customer-name').value;
       const phone = document.getElementById('customer-phone').value;
       const city = document.getElementById('customer-city').value;
