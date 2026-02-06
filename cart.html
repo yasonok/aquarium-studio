@@ -196,11 +196,11 @@
           </div>
           
           <button class="line-order-btn" id="lineOrderBtn" onclick="sendToLine()">
-            💬 發送訂單到 LINE
+            💬 發送訂單
           </button>
           
           <p style="text-align: center; margin-top: 15px; color: #999; font-size: 0.9rem;">
-            點擊上方按鈕直接發送訂單到 LINE
+            點擊上方按鈕開啟 LINE，貼上訂單資訊並傳送
           </p>
         </div>
       </div>
@@ -356,17 +356,15 @@ ${cart.map(item => `• ${item.name} x ${item.quantity} = $${item.price * item.q
       const encodedMessage = encodeURIComponent(message);
       const lineUrl = `https://line.me/ti/p/@${lineId}?${encodedMessage}`;
       
-      // Copy message first
-      navigator.clipboard.writeText(message.trim()).then(() => {
-        console.log('Message copied to clipboard');
-      }).catch(() => {
-        console.log('Could not copy message');
-      });
-      
-      // Open LINE
+      // Open LINE directly
       window.open(lineUrl, '_blank');
       
-      AquariumApp.showToast('訂單資訊已複製，請在 LINE 中貼上並傳送', 'success');
+      // Copy message as backup
+      navigator.clipboard.writeText(message.trim()).then(() => {
+        AquariumApp.showToast('已開啟 LINE，貼上訂單資訊並傳送即可', 'success');
+      }).catch(() => {
+        AquariumApp.showToast('已開啟 LINE，請手動輸入訂單資訊', 'success');
+      });
     }
     
     // Initialize
