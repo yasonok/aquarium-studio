@@ -1,0 +1,18 @@
+{
+  "site": {
+    "name": "Aquarium Studio",
+    "logo": "🐟",
+    "tagline": "專業水族用品"
+  },
+  "contact": {
+    "phone": "0912-345-678",
+    "lineId": "@yasonok02061",
+    "lineUrl": "https://line.me/ti/p/@yasonok02061",
+    "address": "台灣水族用品店",
+    "email": "yasonok@hotmail.com"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": ""
+  }
+}

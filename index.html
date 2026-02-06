@@ -156,9 +156,10 @@
         </div>
         <div class="footer-section">
           <h3>📞 聯絡我們</h3>
-          <p>LINE: @yasonok02061</p>
-          <p>電話: (02) 1234-5678</p>
-          <p>服務時間: 週一至週六 9:00-18:00</p>
+          <p id="footer-lineId">LINE: @yasonok02061</p>
+          <p id="footer-phone">電話: (02) 1234-5678</p>
+          <p id="footer-email">yasonok@hotmail.com</p>
+          <p id="footer-hours">服務時間: 週一至週六 9:00-18:00</p>
         </div>
         <div class="footer-section">
           <h3>🔗 快速連結</h3>
@@ -181,11 +182,24 @@
   </footer>
 
   <script src="js/app.js"></script>
+  <script src="js/settings.js"></script>
   <script>
     // Load featured products (first 4)
     document.addEventListener('DOMContentLoaded', function() {
       renderFeaturedProducts();
+      loadFooterInfo();
     });
+
+    function loadFooterInfo() {
+      const settings = SiteSettings.load();
+      const phoneEl = document.getElementById('footer-phone');
+      const lineIdEl = document.getElementById('footer-lineId');
+      const emailEl = document.getElementById('footer-email');
+      
+      if (phoneEl) phoneEl.textContent = '電話: ' + settings.contact.phone;
+      if (lineIdEl) lineIdEl.textContent = 'LINE: ' + settings.contact.lineId;
+      if (emailEl) emailEl.textContent = settings.contact.email;
+    }
 
     function renderFeaturedProducts() {
       const grid = document.getElementById('featured-grid');

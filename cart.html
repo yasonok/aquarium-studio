@@ -151,6 +151,7 @@
 
   <script src="js/app.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/settings.js"></script>
   <script>
     // Toggle mobile menu
     function toggleMobileMenu() {
@@ -206,6 +207,13 @@
         }
       });
     });
+    
+    // Load footer info from settings
+    function loadFooterInfo() {
+      const settings = SiteSettings.load();
+      // Update any contact info elements if they exist
+    }
+    loadFooterInfo();
   </script>
 </body>
 </html>
