@@ -229,6 +229,18 @@
   <script>
     let lineId = 'yasonok02061';
     
+    // Check if LINE friend has been added
+    function checkLineAdded() {
+      const hasAddedLine = localStorage.getItem('lineAdded_' + lineId) === 'true';
+      if (!hasAddedLine) {
+        // Redirect to shop page to add LINE friend
+        alert('請先加入 LINE 好友才能購買商品！');
+        window.location.href = 'shop.html';
+        return false;
+      }
+      return true;
+    }
+    
     function toggleMobileMenu() {
       const navLinks = document.querySelector('.nav-links');
       const menuBtn = document.querySelector('.mobile-menu-btn');
@@ -359,6 +371,10 @@ ${cart.map(item => `• ${item.name} x ${item.quantity} = $${item.price * item.q
     
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
+      // Check if LINE friend has been added first
+      if (!checkLineAdded()) {
+        return; // Will redirect in checkLineAdded
+      }
       loadSettings();
       renderCart();
     });
