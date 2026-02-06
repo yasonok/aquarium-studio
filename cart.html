@@ -42,40 +42,32 @@
       </div>
     </header>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>🛒 購物車</h2>
-        </div>
+    <section class="section" style="padding: 20px 0;">
+      <div class="container" style="max-width: 600px;">
+        <h1 style="font-size: 1.5rem; margin-bottom: 20px; color: #333;">🛒 購物車</h1>
         
-        <!-- Cart List -->
-        <div class="cart-list">
-          <div class="cart-list-header">
-            <span class="col-product">商品</span>
-            <span class="col-qty">數量</span>
-            <span class="col-price">小計</span>
-            <span class="col-action"></span>
-          </div>
-          <div id="cartItems"></div>
-        </div>
+        <!-- Cart Items -->
+        <div id="cartItems"></div>
         
         <!-- Empty Cart -->
-        <div class="cart-empty" id="emptyCart" style="display:none;">
-          <div class="cart-empty-icon">🛒</div>
+        <div class="empty-state" id="emptyCart" style="display:none;">
+          <div class="empty-state-icon">🛒</div>
           <h3>購物車是空的</h3>
           <p>去看看有哪些商品吧！</p>
-          <a href="shop.html" class="empty-cart-btn">去商店逛逛</a>
+          <a href="shop.html" class="btn btn-primary">去商店逛逛</a>
         </div>
         
-        <!-- Cart Summary -->
-        <div class="cart-summary-box" id="cartSummary" style="display:none;">
-          <div class="cart-total-row">
-            <span>訂單總金額</span>
-            <span class="total-price" id="cartTotal">$0</span>
+        <!-- Cart Footer -->
+        <div id="cartFooter" style="display:none; margin-top: 20px;">
+          <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+              <span style="color: #666;">訂單總金額</span>
+              <span style="font-size: 1.5rem; font-weight: bold; color: #667eea;" id="cartTotal">$0</span>
+            </div>
+            <button onclick="sendToLine()" class="btn btn-success" style="width: 100%; padding: 16px; font-size: 1.1rem;">
+              💬 發送訂單
+            </button>
           </div>
-          <button class="order-btn" onclick="sendToLine()">
-            💬 發送訂單
-          </button>
         </div>
       </div>
     </section>
@@ -101,42 +93,34 @@
     .line-btn { background:white; color:#06c755; padding:15px 40px; border-radius:50px; font-size:1.1rem; font-weight:bold; text-decoration:none; display:inline-block; margin:10px; }
     .line-btn-secondary { background:transparent; border:2px solid white; color:white; padding:12px 35px; border-radius:30px; font-size:1rem; cursor:pointer; margin:10px; }
     
-    .cart-list { background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-    .cart-list-header { display:grid; grid-template-columns:2fr 1fr 1fr 50px; padding:12px 15px; background:#f8f9fa; font-weight:600; color:#666; font-size:0.85rem; }
-    .cart-list-header span { text-align:center; }
-    .cart-list-header .col-product { text-align:left; }
+    .cart-product-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 12px; }
+    .cart-product-info { flex: 1; }
+    .cart-product-name { font-weight: 600; color: #333; font-size: 1rem; margin-bottom: 4px; }
+    .cart-product-price { color: #667eea; font-size: 0.9rem; }
+    .cart-product-qty { display: flex; align-items: center; gap: 8px; background: #f5f7fa; border-radius: 8px; padding: 4px; }
+    .cart-qty-btn { width: 32px; height: 32px; border: none; background: white; border-radius: 6px; cursor: pointer; font-size: 1.1rem; color: #667eea; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .cart-qty-btn:hover { background: #667eea; color: white; }
+    .cart-qty-num { min-width: 30px; text-align: center; font-weight: 600; }
+    .cart-product-total { font-weight: bold; color: #667eea; font-size: 1.1rem; min-width: 80px; text-align: right; }
+    .cart-remove-btn { width: 36px; height: 36px; border: none; background: #ffebee; color: #ff4757; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .cart-remove-btn:hover { background: #ff4757; color: white; }
     
-    .cart-item { display:grid; grid-template-columns:2fr 1fr 1fr 50px; padding:15px; border-bottom:1px solid #eee; align-items:center; background:white; }
-    .cart-item:last-child { border-bottom:none; }
-    .cart-item-name { font-weight:500; color:#333; font-size:0.95rem; }
-    .cart-item-price { color:#667eea; font-weight:bold; font-size:0.95rem; text-align:center; }
-    .cart-item-qty { display:flex; align-items:center; justify-content:center; gap:8px; }
-    .qty-btn { width:32px; height:32px; border-radius:8px; border:1px solid #ddd; background:white; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:#667eea; transition:all 0.2s; }
-    .qty-btn:hover { background:#667eea; color:white; border-color:#667eea; }
-    .cart-item-total { font-weight:bold; color:#667eea; font-size:1rem; text-align:center; }
-    .cart-item-remove { color:#ff4757; background:none; border:none; cursor:pointer; font-size:1.2rem; text-align:center; padding:5px; }
-    .cart-item-remove:hover { opacity:0.7; }
+    .btn { display: inline-block; padding: 12px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; text-align: center; }
+    .btn-primary { background: #667eea; color: white; }
+    .btn-primary:hover { background: #5a6fd6; }
+    .btn-success { background: linear-gradient(135deg, #06c755, #00b44a); color: white; font-weight: bold; }
+    .btn-success:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(6,199,85,0.3); }
     
-    .cart-empty { text-align:center; padding:50px 20px; }
-    .cart-empty-icon { font-size:3.5rem; margin-bottom:15px; }
-    .cart-empty h3 { color:#333; margin-bottom:8px; }
-    .cart-empty p { color:#999; margin-bottom:20px; }
-    .empty-cart-btn { display:inline-block; background:#667eea; color:white; padding:12px 30px; border-radius:10px; font-weight:600; text-decoration:none; }
+    .empty-state { text-align: center; padding: 60px 20px; }
+    .empty-state-icon { font-size: 4rem; margin-bottom: 15px; }
+    .empty-state h3 { color: #333; margin-bottom: 8px; }
+    .empty-state p { color: #999; margin-bottom: 20px; }
     
-    .cart-summary-box { background:white; border-radius:12px; padding:20px; margin-top:20px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-    .cart-total-row { display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; margin-bottom:15px; border-bottom:1px solid #eee; }
-    .cart-total-row span:first-child { font-size:1rem; color:#666; }
-    .total-price { font-size:1.4rem; font-weight:bold; color:#667eea; }
-    .order-btn { width:100%; padding:16px; background:linear-gradient(135deg,#06c755,#00b44a); color:white; border:none; border-radius:12px; font-size:1.1rem; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; }
-    .order-btn:hover { transform:translateY(-2px); box-shadow:0 4px 15px rgba(6,199,85,0.3); }
-    
-    @media (max-width: 600px) {
-      .cart-list-header { display:none; }
-      .cart-item { grid-template-columns:1fr auto; gap:12px; padding:15px; }
-      .cart-item-name { grid-column:1; font-size:1rem; }
-      .cart-item-qty { grid-column:1; justify-content:flex-start; }
-      .cart-item-total { grid-column:2; grid-row:1; }
-      .cart-item-remove { grid-column:2; grid-row:2; }
+    @media (max-width: 480px) {
+      .cart-product-card { flex-wrap: wrap; }
+      .cart-product-info { width: calc(100% - 100px); }
+      .cart-product-total { width: 100%; text-align: left; margin-top: 5px; padding-left: 50px; }
+      .cart-remove-btn { position: absolute; right: 15px; top: 15px; }
     }
   </style>
 
@@ -164,31 +148,34 @@
     function renderCart() {
       const cart = AquariumApp.getCart();
       const itemsContainer = document.getElementById('cartItems');
-      const summaryContainer = document.getElementById('cartSummary');
+      const footerContainer = document.getElementById('cartFooter');
       const emptyContainer = document.getElementById('emptyCart');
       
       document.getElementById('cartCount').textContent = cart.length;
       
       if (cart.length === 0) {
         itemsContainer.innerHTML = '';
-        summaryContainer.style.display = 'none';
+        footerContainer.style.display = 'none';
         emptyContainer.style.display = 'block';
         return;
       }
       
       emptyContainer.style.display = 'none';
-      summaryContainer.style.display = 'block';
+      footerContainer.style.display = 'block';
       
       itemsContainer.innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
-          <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-qty">
-            <button class="qty-btn" onclick="updateQty(${index}, -1)">−</button>
-            <span>${item.quantity}</span>
-            <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+        <div class="cart-product-card" style="position: relative;">
+          <div class="cart-product-info">
+            <div class="cart-product-name">${item.name}</div>
+            <div class="cart-product-price">單價 $${item.price}</div>
           </div>
-          <div class="cart-item-total">$${item.price * item.quantity}</div>
-          <button class="cart-item-remove" onclick="removeItem(${index})">✕</button>
+          <div class="cart-product-qty">
+            <button class="cart-qty-btn" onclick="updateQty(${index}, -1)">−</button>
+            <span class="cart-qty-num">${item.quantity}</span>
+            <button class="cart-qty-btn" onclick="updateQty(${index}, 1)">+</button>
+          </div>
+          <div class="cart-product-total">$${item.price * item.quantity}</div>
+          <button class="cart-remove-btn" onclick="removeItem(${index})">✕</button>
         </div>
       `).join('');
       
