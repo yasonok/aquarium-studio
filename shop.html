@@ -8,7 +8,7 @@
 </head>
 <body>
   <!-- Loading -->
-  <div style="display:flex;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;">
+  <div id="loading" style="display:flex;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;">
     <h2>🐟 Aquarium Studio</h2>
     <p>載入中...</p>
   </div>
@@ -17,15 +17,10 @@
   <div id="line-page" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#06c755,#00b44a);color:white;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;">
     <h1 style="font-size:2.5rem;margin-bottom:20px;">💚 加入 LINE 好友</h1>
     <p style="font-size:1.2rem;margin-bottom:30px;opacity:0.9;">請先加入好友才能購買商品</p>
-    
-    <!-- LINE Add Button -->
-    <a href="https://line.me/ti/p/tsAGZrm9vt" id="line-add-btn" style="background:white;color:#06c755;padding:20px 50px;border-radius:50px;font-size:1.3rem;font-weight:bold;text-decoration:none;display:inline-flex;align-items:center;gap:10px;box-shadow:0 5px 20px rgba(0,0,0,0.2);">
+    <a href="https://line.me/ti/p/tsAGZrm9vt" style="background:white;color:#06c755;padding:20px 50px;border-radius:50px;font-size:1.3rem;font-weight:bold;text-decoration:none;display:inline-flex;align-items:center;gap:10px;box-shadow:0 5px 20px rgba(0,0,0,0.2);">
       📱 加入 LINE 好友
     </a>
-    
     <p style="margin-top:30px;font-size:0.9rem;opacity:0.8;">或</p>
-    
-    <!-- Confirm Button -->
     <button onclick="confirmAdded()" style="margin-top:20px;background:transparent;border:3px solid white;color:white;padding:15px 40px;border-radius:30px;font-size:1.1rem;cursor:pointer;">
       ✅ 我已加入好友
     </button>
@@ -103,8 +98,9 @@
     }
 
     function showLinePage() {
-      document.body.innerHTML = document.getElementById('line-page').innerHTML;
-      // Try to open LINE automatically
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('line-page').style.display = 'flex';
+      // Auto open LINE after 500ms
       setTimeout(() => {
         window.location.href = 'https://line.me/ti/p/' + LINE_ID;
       }, 500);
@@ -143,20 +139,17 @@
         </div>
       `).join('');
       
-      // Update cart count
       const cart = AquariumApp.getCart();
       const countEl = document.getElementById('cartCount');
       if (countEl) countEl.textContent = cart.length;
     }
 
     function filterProducts(category) {
-      // For simplicity, just show all products (can filter in production)
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.category === category);
       });
     }
 
-    // Initialize
     document.addEventListener('DOMContentLoaded', function() {
       const hasAddedLine = localStorage.getItem('lineAdded_' + LINE_ID) === 'true';
       
