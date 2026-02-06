@@ -5,26 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>購物車 - Aquarium Studio</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .loading-page { display:flex; justify-content:center; align-items:center; min-height:100vh; flex-direction:column; background:#f5f7fa; }
+    .loading-page h2 { color:#333; margin-bottom:10px; }
+    .loading-page p { color:#666; }
+    
+    .line-page { position:fixed; top:0; left:0; right:0; bottom:0; background:linear-gradient(135deg,#06c755,#00b44a); color:white; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; }
+    .line-page h1 { font-size:2.5rem; margin-bottom:20px; }
+    .line-page p { font-size:1.2rem; margin-bottom:30px; opacity:0.9; }
+    .line-btn { background:white; color:#06c755; padding:20px 50px; border-radius:50px; font-size:1.3rem; font-weight:bold; text-decoration:none; display:inline-block; margin:10px; box-shadow:0 5px 20px rgba(0,0,0,0.2); }
+    .line-btn-secondary { background:transparent; border:3px solid white; color:white; padding:15px 40px; border-radius:30px; font-size:1.1rem; cursor:pointer; margin:10px; }
+    
+    .cart-product-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 12px; }
+    .cart-product-info { flex: 1; }
+    .cart-product-name { font-weight: 600; color: #333; font-size: 1rem; margin-bottom: 4px; }
+    .cart-product-price { color: #667eea; font-size: 0.9rem; }
+    .cart-product-qty { display: flex; align-items: center; gap: 8px; background: #f5f7fa; border-radius: 8px; padding: 4px; }
+    .cart-qty-btn { width: 32px; height: 32px; border: none; background: white; border-radius: 6px; cursor: pointer; font-size: 1.1rem; color: #667eea; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .cart-qty-btn:hover { background: #667eea; color: white; }
+    .cart-qty-num { min-width: 30px; text-align: center; font-weight: 600; }
+    .cart-product-total { font-weight: bold; color: #667eea; font-size: 1.1rem; min-width: 80px; text-align: right; }
+    .cart-remove-btn { width: 36px; height: 36px; border: none; background: #ffebee; color: #ff4757; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .cart-remove-btn:hover { background: #ff4757; color: white; }
+    
+    .btn { display: inline-block; padding: 12px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-primary { background: #667eea; color: white; }
+    .btn-success { background: linear-gradient(135deg, #06c755, #00b44a); color: white; font-weight: bold; width: 100%; padding: 16px; font-size: 1.1rem; }
+    .btn-success:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(6,199,85,0.3); }
+    
+    .empty-state { text-align: center; padding: 60px 20px; }
+    .empty-state-icon { font-size: 4rem; margin-bottom: 15px; }
+    .empty-state h3 { color: #333; margin-bottom: 8px; }
+    .empty-state p { color: #999; margin-bottom: 20px; }
+  </style>
 </head>
 <body>
   <!-- Loading -->
-  <div class="loading-page">
+  <div id="loading" class="loading-page">
     <h2>🐟 Aquarium Studio</h2>
     <p>載入中...</p>
   </div>
 
   <!-- LINE Page -->
-  <div class="line-page" id="line-page" style="display:none;">
-    <div class="line-page-content">
-      <h1>💚 加入 LINE 好友</h1>
-      <p>請先加入好友才能購買商品</p>
-      <a href="https://line.me/ti/p/tsAGZrm9vt" class="line-btn">📱 加入 LINE 好友</a>
-      <button class="line-btn-secondary" onclick="confirmAdded()">✅ 我已加入好友</button>
-    </div>
+  <div id="line-page" class="line-page">
+    <h1>💚 加入 LINE 好友</h1>
+    <p>請先加入好友才能購買商品</p>
+    <a href="https://line.me/ti/p/tsAGZrm9vt" class="line-btn">📱 加入 LINE 好友</a>
+    <br><br>
+    <p style="opacity:0.8;">或</p>
+    <button onclick="confirmAdded()" class="line-btn-secondary">✅ 我已加入好友</button>
   </div>
 
   <!-- Cart Page -->
-  <div class="cart-page" id="cart-page" style="display:none;">
+  <div id="cart-page" style="display:none;">
     <header class="header">
       <div class="container">
         <div class="header-inner">
@@ -46,10 +79,8 @@
       <div class="container" style="max-width: 600px;">
         <h1 style="font-size: 1.5rem; margin-bottom: 20px; color: #333;">🛒 購物車</h1>
         
-        <!-- Cart Items -->
         <div id="cartItems"></div>
         
-        <!-- Empty Cart -->
         <div class="empty-state" id="emptyCart" style="display:none;">
           <div class="empty-state-icon">🛒</div>
           <h3>購物車是空的</h3>
@@ -57,16 +88,13 @@
           <a href="shop.html" class="btn btn-primary">去商店逛逛</a>
         </div>
         
-        <!-- Cart Footer -->
         <div id="cartFooter" style="display:none; margin-top: 20px;">
           <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
               <span style="color: #666;">訂單總金額</span>
               <span style="font-size: 1.5rem; font-weight: bold; color: #667eea;" id="cartTotal">$0</span>
             </div>
-            <button onclick="sendToLine()" class="btn btn-success" style="width: 100%; padding: 16px; font-size: 1.1rem;">
-              💬 發送訂單
-            </button>
+            <button onclick="sendToLine()" class="btn btn-success">💬 發送訂單</button>
           </div>
         </div>
       </div>
@@ -81,66 +109,18 @@
     </footer>
   </div>
 
-  <style>
-    .loading-page { display:flex; justify-content:center; align-items:center; min-height:100vh; flex-direction:column; background:#f5f7fa; }
-    .loading-page h2 { color:#333; margin-bottom:10px; }
-    .loading-page p { color:#666; }
-    
-    .line-page { position:fixed; top:0; left:0; right:0; bottom:0; background:linear-gradient(135deg,#06c755,#00b44a); color:white; display:none; }
-    .line-page-content { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; text-align:center; padding:20px; }
-    .line-page h1 { font-size:2rem; margin-bottom:15px; }
-    .line-page p { font-size:1rem; margin-bottom:25px; opacity:0.9; }
-    .line-btn { background:white; color:#06c755; padding:15px 40px; border-radius:50px; font-size:1.1rem; font-weight:bold; text-decoration:none; display:inline-block; margin:10px; }
-    .line-btn-secondary { background:transparent; border:2px solid white; color:white; padding:12px 35px; border-radius:30px; font-size:1rem; cursor:pointer; margin:10px; }
-    
-    .cart-product-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 12px; }
-    .cart-product-info { flex: 1; }
-    .cart-product-name { font-weight: 600; color: #333; font-size: 1rem; margin-bottom: 4px; }
-    .cart-product-price { color: #667eea; font-size: 0.9rem; }
-    .cart-product-qty { display: flex; align-items: center; gap: 8px; background: #f5f7fa; border-radius: 8px; padding: 4px; }
-    .cart-qty-btn { width: 32px; height: 32px; border: none; background: white; border-radius: 6px; cursor: pointer; font-size: 1.1rem; color: #667eea; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .cart-qty-btn:hover { background: #667eea; color: white; }
-    .cart-qty-num { min-width: 30px; text-align: center; font-weight: 600; }
-    .cart-product-total { font-weight: bold; color: #667eea; font-size: 1.1rem; min-width: 80px; text-align: right; }
-    .cart-remove-btn { width: 36px; height: 36px; border: none; background: #ffebee; color: #ff4757; border-radius: 8px; cursor: pointer; font-size: 1rem; }
-    .cart-remove-btn:hover { background: #ff4757; color: white; }
-    
-    .btn { display: inline-block; padding: 12px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; text-align: center; }
-    .btn-primary { background: #667eea; color: white; }
-    .btn-primary:hover { background: #5a6fd6; }
-    .btn-success { background: linear-gradient(135deg, #06c755, #00b44a); color: white; font-weight: bold; }
-    .btn-success:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(6,199,85,0.3); }
-    
-    .empty-state { text-align: center; padding: 60px 20px; }
-    .empty-state-icon { font-size: 4rem; margin-bottom: 15px; }
-    .empty-state h3 { color: #333; margin-bottom: 8px; }
-    .empty-state p { color: #999; margin-bottom: 20px; }
-    
-    @media (max-width: 480px) {
-      .cart-product-card { flex-wrap: wrap; }
-      .cart-product-info { width: calc(100% - 100px); }
-      .cart-product-total { width: 100%; text-align: left; margin-top: 5px; padding-left: 50px; }
-      .cart-remove-btn { position: absolute; right: 15px; top: 15px; }
-    }
-  </style>
-
   <script src="js/app.js"></script>
   <script>
     const LINE_ID = 'tsAGZrm9vt';
+    const STORAGE_KEY = 'lineAdded_' + LINE_ID;
     
     function confirmAdded() {
-      localStorage.setItem('lineAdded_' + LINE_ID, 'true');
+      localStorage.setItem(STORAGE_KEY, 'true');
       location.reload();
     }
 
-    function showLinePage() {
-      document.querySelector('.loading-page').style.display = 'none';
-      document.getElementById('line-page').style.display = 'block';
-      setTimeout(() => { window.location.href = 'https://line.me/ti/p/' + LINE_ID; }, 500);
-    }
-
     function showCartPage() {
-      document.querySelector('.loading-page').style.display = 'none';
+      document.getElementById('loading').style.display = 'none';
       document.getElementById('line-page').style.display = 'none';
       document.getElementById('cart-page').style.display = 'block';
     }
@@ -164,7 +144,7 @@
       footerContainer.style.display = 'block';
       
       itemsContainer.innerHTML = cart.map((item, index) => `
-        <div class="cart-product-card" style="position: relative;">
+        <div class="cart-product-card">
           <div class="cart-product-info">
             <div class="cart-product-name">${item.name}</div>
             <div class="cart-product-price">單價 $${item.price}</div>
@@ -209,9 +189,19 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const hasAddedLine = localStorage.getItem('lineAdded_' + LINE_ID) === 'true';
-      if (hasAddedLine) { showCartPage(); renderCart(); } 
-      else { showLinePage(); }
+      // 清除舊的 LINE ID 記錄
+      localStorage.removeItem('lineAdded_yasonok02061');
+      
+      const hasAddedLine = localStorage.getItem(STORAGE_KEY) === 'true';
+      console.log('LINE Added:', hasAddedLine);
+      
+      if (hasAddedLine) {
+        showCartPage();
+        renderCart();
+      } else {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('line-page').style.display = 'flex';
+      }
     });
   </script>
 </body>

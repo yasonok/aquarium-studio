@@ -5,28 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>商店 - Aquarium Studio</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .loading-page { display:flex; justify-content:center; align-items:center; min-height:100vh; flex-direction:column; background:#f5f7fa; }
+    .loading-page h2 { color:#333; margin-bottom:10px; }
+    .loading-page p { color:#666; }
+    
+    .line-page { position:fixed; top:0; left:0; right:0; bottom:0; background:linear-gradient(135deg,#06c755,#00b44a); color:white; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; }
+    .line-page h1 { font-size:2.5rem; margin-bottom:20px; }
+    .line-page p { font-size:1.2rem; margin-bottom:30px; opacity:0.9; }
+    .line-btn { background:white; color:#06c755; padding:20px 50px; border-radius:50px; font-size:1.3rem; font-weight:bold; text-decoration:none; display:inline-block; margin:10px; box-shadow:0 5px 20px rgba(0,0,0,0.2); }
+    .line-btn:hover { transform:scale(1.05); }
+    .line-btn-secondary { background:transparent; border:3px solid white; color:white; padding:15px 40px; border-radius:30px; font-size:1.1rem; cursor:pointer; margin:10px; }
+  </style>
 </head>
 <body>
   <!-- Loading -->
-  <div id="loading" style="display:flex;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;">
+  <div id="loading" class="loading-page">
     <h2>🐟 Aquarium Studio</h2>
     <p>載入中...</p>
   </div>
 
-  <!-- LINE Page (if not added) -->
-  <div id="line-page" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#06c755,#00b44a);color:white;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;">
-    <h1 style="font-size:2.5rem;margin-bottom:20px;">💚 加入 LINE 好友</h1>
-    <p style="font-size:1.2rem;margin-bottom:30px;opacity:0.9;">請先加入好友才能購買商品</p>
-    <a href="https://line.me/ti/p/tsAGZrm9vt" style="background:white;color:#06c755;padding:20px 50px;border-radius:50px;font-size:1.3rem;font-weight:bold;text-decoration:none;display:inline-flex;align-items:center;gap:10px;box-shadow:0 5px 20px rgba(0,0,0,0.2);">
-      📱 加入 LINE 好友
-    </a>
-    <p style="margin-top:30px;font-size:0.9rem;opacity:0.8;">或</p>
-    <button onclick="confirmAdded()" style="margin-top:20px;background:transparent;border:3px solid white;color:white;padding:15px 40px;border-radius:30px;font-size:1.1rem;cursor:pointer;">
-      ✅ 我已加入好友
-    </button>
+  <!-- LINE Page -->
+  <div id="line-page" class="line-page">
+    <h1>💚 加入 LINE 好友</h1>
+    <p>請先加入好友才能購買商品</p>
+    <a href="https://line.me/ti/p/tsAGZrm9vt" class="line-btn">📱 加入 LINE 好友</a>
+    <br><br>
+    <p style="opacity:0.8;">或</p>
+    <button onclick="confirmAdded()" class="line-btn-secondary">✅ 我已加入好友</button>
   </div>
 
-  <!-- Shop Page (if added) -->
+  <!-- Shop Page -->
   <div id="shop-page" style="display:none;">
     <header class="header">
       <div class="container">
@@ -70,17 +79,6 @@
 
     <footer class="footer">
       <div class="container">
-        <div class="footer-grid">
-          <div class="footer-section">
-            <h3>🐟 Aquarium Studio</h3>
-            <p>專業孔雀魚養殖與販售</p>
-          </div>
-          <div class="footer-section">
-            <h3>📞 聯絡我們</h3>
-            <p>LINE: @tsAGZrm9vt</p>
-            <p>電話: (02) 1234-5678</p>
-          </div>
-        </div>
         <div class="footer-bottom">
           <p>&copy; 2026 Aquarium Studio</p>
         </div>
@@ -91,19 +89,11 @@
   <script src="js/app.js"></script>
   <script>
     const LINE_ID = 'tsAGZrm9vt';
+    const STORAGE_KEY = 'lineAdded_' + LINE_ID;
     
     function confirmAdded() {
-      localStorage.setItem('lineAdded_' + LINE_ID, 'true');
+      localStorage.setItem(STORAGE_KEY, 'true');
       location.reload();
-    }
-
-    function showLinePage() {
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('line-page').style.display = 'flex';
-      // Auto open LINE after 500ms
-      setTimeout(() => {
-        window.location.href = 'https://line.me/ti/p/' + LINE_ID;
-      }, 500);
     }
 
     function showShopPage() {
@@ -140,8 +130,7 @@
       `).join('');
       
       const cart = AquariumApp.getCart();
-      const countEl = document.getElementById('cartCount');
-      if (countEl) countEl.textContent = cart.length;
+      document.getElementById('cartCount').textContent = cart.length;
     }
 
     function filterProducts(category) {
@@ -151,13 +140,19 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const hasAddedLine = localStorage.getItem('lineAdded_' + LINE_ID) === 'true';
+      // 清除舊的 LINE ID 記錄
+      localStorage.removeItem('lineAdded_yasonok02061');
+      
+      const hasAddedLine = localStorage.getItem(STORAGE_KEY) === 'true';
+      console.log('LINE Added:', hasAddedLine);
       
       if (hasAddedLine) {
         showShopPage();
         renderProducts();
       } else {
-        showLinePage();
+        // 顯示 LINE 頁面
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('line-page').style.display = 'flex';
       }
     });
   </script>
