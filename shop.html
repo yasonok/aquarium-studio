@@ -154,7 +154,7 @@
         <p id="lineIdDisplay">@yasonok02061</p>
       </div>
     </div>
-    <button class="line-add-btn" id="lineAddBtn" onclick="openLineModal()">
+    <button class="line-add-btn" id="lineAddBtn" onclick="addLineFriend()">
       💚 加入 LINE
     </button>
   </div>
@@ -163,19 +163,21 @@
   <div class="line-modal-overlay" id="lineModal">
     <div class="line-modal">
       <h2>💚 加入 LINE 好友</h2>
-      <p>請先加入我們的 LINE 好友，才能購買商品和追蹤訂單！</p>
+      <p>請加入我們的 LINE 好友，完成後點「我已加入」即可購買商品！</p>
       
-      <div class="line-qr-code">📱</div>
-      <p style="font-size: 0.9rem; color: #999;">掃描 QR Code 或搜尋 ID</p>
+      <div class="line-qr-code">
+        <a href="https://line.me/ti/p/@yasonok02061" target="_blank" style="text-decoration: none; font-size: 3rem;">💚</a>
+      </div>
+      <p style="font-size: 0.85rem; color: #999;">點上方圖標或按鈕開啟 LINE</p>
       
-      <h3 style="margin: 20px 0 10px;" id="modalLineId">@yasonok02061</h3>
+      <h3 style="margin: 15px 0; color: #06c755;" id="modalLineId">@yasonok02061</h3>
       
-      <button class="line-modal-btn line-primary-btn" onclick="confirmAddLine()">
-        ✅ 我已加入 LINE
-      </button>
+      <a href="https://line.me/ti/p/@yasonok02061" target="_blank" class="line-modal-btn line-primary-btn" style="display: block; text-decoration: none;">
+        📱 開啟 LINE 加入好友
+      </a>
       
-      <button class="line-modal-btn line-secondary-btn" onclick="openLineApp()">
-        📱 開啟 LINE App
+      <button class="line-modal-btn line-primary-btn" onclick="confirmAddLine()" style="background: #4CAF50;">
+        ✅ 我已加入好友
       </button>
       
       <button class="line-modal-btn line-secondary-btn" onclick="closeLineModal()">
@@ -367,10 +369,10 @@
       AquariumApp.showToast('✅ 已加入 LINE 好友！現在可以購買商品了', 'success');
     }
     
-    function requireLineForAction(callback) {
+    function requireLineForAction() {
       if (!hasAddedLine) {
         AquariumApp.showToast('請先加入 LINE 好友才能購買商品', 'warning');
-        openLineModal();
+        addLineFriend();
         return false;
       }
       return true;
