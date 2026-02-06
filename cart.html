@@ -655,6 +655,30 @@
         'credit': '信用卡'
       };
       
+      // Get LINE ID from settings
+      let lineId = 'yasonok02061';
+      if (typeof SiteSettings !== 'undefined') {
+        const settings = SiteSettings.load();
+        lineId = settings.contact.lineId.replace('@', '');
+      }
+      
+      // Generate order message
+      const orderMessage = `
+🐟 Aquarium Studio 訂單
+
+訂單編號: ${order.id}
+姓名: ${order.customer.name}
+電話: ${order.customer.phone}
+地址: ${order.customer.address}
+配送: ${shippingNames[order.customer.shippingMethod]}
+付款: ${paymentNames[order.customer.paymentMethod]}
+
+商品:
+${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * item.quantity}`).join('\n')}
+
+總金額: $${order.total}
+`;
+      
       content.innerHTML = `
         <div style="text-align: center; padding: 20px;">
           <div style="font-size: 4rem; margin-bottom: 20px;">✅</div>
@@ -673,16 +697,51 @@
             總金額: <span style="color: #667eea;">$${order.total}</span>
           </p>
           
+          <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
+            <button onclick="contactViaLine('${lineId}', \`${orderMessage}\`)" class="btn btn-primary btn-lg" style="background: #06c755;">
+              💬 加入 LINE 聯繫管理員
+            </button>
+            <button onclick="copyOrderInfo(\`${orderMessage}\`)" class="btn btn-secondary btn-lg">
+              📋 複製訂單資訊
+            </button>
+          </div>
+          
           <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 20px;">
-            管理員將透過 LINE 與您聯繫確認訂單
+            點擊上方按鈕聯繫管理員確認訂單
           </p>
           
-          <a href="shop.html" class="btn btn-primary btn-lg" style="margin-right: 10px;">繼續購物</a>
+          <a href="shop.html" class="btn btn-outline btn-lg" style="margin-right: 10px;">繼續購物</a>
           <button onclick="closeOrderModal()" class="btn btn-secondary btn-lg">關閉</button>
         </div>
       `;
       
       modal.style.display = 'flex';
+    }
+    
+    function contactViaLine(lineId, message) {
+      // Copy message to clipboard
+      copyOrderInfo(message);
+      
+      // Open LINE
+      const lineUrl = `https://line.me/ti/p/@${lineId}`;
+      window.open(lineUrl, '_blank');
+      
+      AquariumApp.showToast('訂單資訊已複製，請在 LINE 中貼上並傳送', 'success');
+    }
+    
+    function copyOrderInfo(message) {
+      navigator.clipboard.writeText(message.trim()).then(() => {
+        AquariumApp.showToast('訂單資訊已複製到剪貼簿', 'success');
+      }).catch(() => {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = message.trim();
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        AquariumApp.showToast('訂單資訊已複製到剪貼簿', 'success');
+      });
     }
     
     function closeOrderModal() {
