@@ -26,7 +26,10 @@ const SiteSettings = {
                 const parsed = JSON.parse(stored);
                 // Merge with defaults for new fields
                 return {
-                    ...this.defaultSettings,
+                    site: {
+                        ...this.defaultSettings.site,
+                        ...(parsed.site || {})
+                    },
                     contact: {
                         ...this.defaultSettings.contact,
                         ...parsed
@@ -47,6 +50,24 @@ const SiteSettings = {
             console.error('Error saving settings:', e);
             return false;
         }
+    },
+    
+    saveAll: function(fullSettings) {
+        try {
+            localStorage.setItem('siteSettings', JSON.stringify(fullSettings));
+            return true;
+        } catch(e) {
+            console.error('Error saving all settings:', e);
+            return false;
+        }
+    },
+    
+    getSiteName: function() {
+        return this.load().site.name;
+    },
+    
+    getSiteLogo: function() {
+        return this.load().site.logo;
     },
     
     getPhone: function() {

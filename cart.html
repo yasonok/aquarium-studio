@@ -208,11 +208,24 @@
       });
     });
     
-    // Load footer info from settings
+    // Load site name and footer info from settings
+    function loadSiteName() {
+      const settings = SiteSettings.load();
+      // Update page title
+      document.title = settings.site.logo + ' ' + settings.site.name + ' - 購物車';
+      
+      // Update logo text in header
+      const logoText = document.querySelector('.logo-text');
+      if (logoText) {
+        logoText.innerHTML = settings.site.name;
+      }
+    }
+    
     function loadFooterInfo() {
       const settings = SiteSettings.load();
       // Update any contact info elements if they exist
     }
+    loadSiteName();
     loadFooterInfo();
   </script>
 </body>

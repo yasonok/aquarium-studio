@@ -188,9 +188,32 @@
     document.addEventListener('DOMContentLoaded', function() {
       renderFeaturedProducts();
       loadFooterInfo();
+      loadSiteName();
     });
 
-    function loadFooterInfo() {
+    function loadSiteName() {
+      const settings = SiteSettings.load();
+      // Update page title
+      document.title = settings.site.logo + ' ' + settings.site.name + ' - 專業孔雀魚專賣店';
+      
+      // Update logo text in header
+      const logoText = document.querySelector('.logo-text');
+      if (logoText) {
+        logoText.innerHTML = settings.site.name;
+      }
+      
+      // Update hero title
+      const heroTitle = document.querySelector('.hero-content h1');
+      if (heroTitle) {
+        heroTitle.innerHTML = settings.site.logo + ' ' + settings.site.name;
+      }
+      
+      // Update footer brand
+      const footerBrand = document.querySelector('.footer-section h3');
+      if (footerBrand) {
+        footerBrand.innerHTML = settings.site.logo + ' ' + settings.site.name;
+      }
+    }
       const settings = SiteSettings.load();
       const phoneEl = document.getElementById('footer-phone');
       const lineIdEl = document.getElementById('footer-lineId');

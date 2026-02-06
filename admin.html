@@ -564,7 +564,8 @@
             <div class="header-inner">
                 <a href="index.html" class="logo">
                     <span>🐟</span>
-                    <span>Aquarium Studio</span>
+                    <span id="admin-logo">🐟</span>
+                    <span id="admin-site-name">Aquarium Studio</span>
                 </a>
                 <div style="display: flex; gap: 10px;">
                     <a href="index.html" class="back-home">🏠 回到首頁</a>
@@ -601,6 +602,18 @@
         <!-- Site Settings -->
         <h2 class="section-title">⚙️ 網站設定</h2>
         <div class="settings-section" id="settingsSection">
+            <div class="settings-card">
+                <h3>🏪 商店資訊</h3>
+                <div class="form-group">
+                    <label>商店名稱</label>
+                    <input type="text" id="settingSiteName" placeholder="Aquarium Studio">
+                </div>
+                <div class="form-group">
+                    <label>商店圖示 (emoji)</label>
+                    <input type="text" id="settingSiteLogo" placeholder="🐟" maxlength="2">
+                </div>
+            </div>
+            
             <div class="settings-card">
                 <h3>📞 聯絡資訊</h3>
                 <div class="form-group">
@@ -948,9 +961,20 @@
             alert('🔄 同步到 GitHub\n\n若要啟用此功能，需要設定 GitHub Personal Access Token。\n\n可在 https://github.com/settings/tokens 生成 token，然後聯絡我設定。');
         }
         
+        // Load site name in admin header
+        function loadAdminSiteName() {
+            const settings = SiteSettings.load();
+            const logoEl = document.getElementById('admin-logo');
+            const nameEl = document.getElementById('admin-site-name');
+            if (logoEl) logoEl.textContent = settings.site.logo || '🐟';
+            if (nameEl) nameEl.textContent = settings.site.name || 'Aquarium Studio';
+        }
+        
         // Settings functions
         function loadSettings() {
             const settings = SiteSettings.load();
+            document.getElementById('settingSiteName').value = settings.site.name || '';
+            document.getElementById('settingSiteLogo').value = settings.site.logo || '🐟';
             document.getElementById('settingPhone').value = settings.contact.phone || '';
             document.getElementById('settingLineId').value = settings.contact.lineId || '';
             document.getElementById('settingEmail').value = settings.contact.email || '';
@@ -959,13 +983,20 @@
         
         function saveSettings() {
             const settings = {
-                phone: document.getElementById('settingPhone').value,
-                lineId: document.getElementById('settingLineId').value,
-                email: document.getElementById('settingEmail').value,
-                address: document.getElementById('settingAddress').value
+                site: {
+                    name: document.getElementById('settingSiteName').value,
+                    logo: document.getElementById('settingSiteLogo').value,
+                    tagline: document.getElementById('settingSiteName').value ? '專業水族用品' : ''
+                },
+                contact: {
+                    phone: document.getElementById('settingPhone').value,
+                    lineId: document.getElementById('settingLineId').value,
+                    email: document.getElementById('settingEmail').value,
+                    address: document.getElementById('settingAddress').value
+                }
             };
             
-            if (SiteSettings.save(settings)) {
+            if (SiteSettings.saveAll(settings)) {
                 document.getElementById('settingsStatus').textContent = '✅ 設定已儲存！所有頁面已更新。';
                 setTimeout(() => {
                     document.getElementById('settingsStatus').textContent = '';
@@ -1027,6 +1058,7 @@
             
             renderProducts();
             loadSettings();
+            loadAdminSiteName();
             
             // Close modal on outside click
             document.getElementById('productModal').addEventListener('click', function(e) {

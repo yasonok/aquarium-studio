@@ -142,9 +142,22 @@
         renderProducts('all', 'default');
       }
       
-      // Load footer info from settings
+      // Load footer info and site name
       loadFooterInfo();
+      loadSiteName();
     });
+
+    function loadSiteName() {
+      const settings = SiteSettings.load();
+      // Update page title
+      document.title = settings.site.logo + ' ' + settings.site.name + ' - 商店';
+      
+      // Update logo text in header
+      const logoText = document.querySelector('.logo-text');
+      if (logoText) {
+        logoText.innerHTML = settings.site.name;
+      }
+    }
 
     function filterProducts(category) {
       currentCategory = category;
