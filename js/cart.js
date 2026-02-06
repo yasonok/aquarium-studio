@@ -21,7 +21,10 @@ function loadLineSettings() {
 
 function setupCheckoutForm() {
   const form = document.getElementById('checkout-form');
-  if (!form) return;
+  if (!form) {
+    console.error('Checkout form not found');
+    return;
+  }
 
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -45,14 +48,22 @@ function setupCheckoutForm() {
     
     if (order) {
       // Save order to member system if logged in
-      saveOrderToMember(order);
+      if (typeof MemberSystem !== 'undefined' && MemberSystem.isLoggedIn()) {
+        MemberSystem.saveOrder(order, MemberSystem.getCurrentUser().uid);
+      }
       
-      // Show success and LINE option
+      // Close checkout modal
+      document.getElementById('checkout-modal').style.display = 'none';
+      
+      // Show success message
+      AquariumApp.showToast('訂單已成立！', 'success');
+      
+      // Show order confirmation
       showOrderConfirmation(order);
     } else {
-      AquariumApp.showToast('訂單建立失敗', 'error');
+      AquariumApp.showToast('訂單建立失敗，請確認購物車有商品', 'error');
       submitBtn.disabled = false;
-      submitBtn.innerHTML = '確認訂單';
+      submitBtn.innerHTML = '💬 確認訂單並開啟 LINE';
     }
   });
 }
@@ -61,7 +72,10 @@ function showOrderConfirmation(order) {
   const modal = document.getElementById('order-modal');
   const content = document.getElementById('order-modal-content');
   
-  if (!modal || !content) return;
+  if (!modal || !content) {
+    console.error('Order modal elements not found');
+    return;
+  }
   
   content.innerHTML = `
     <div style="text-align: center; padding: 20px;">
@@ -91,22 +105,49 @@ function showOrderConfirmation(order) {
       </p>
       
       <a href="shop.html" class="btn btn-primary btn-lg" style="margin-right: 10px;">繼續購物</a>
-      <button onclick="document.getElementById('order-modal').style.display='none'" class="btn btn-secondary btn-lg">關閉</button>
+      <button onclick="closeOrderModal()" class="btn btn-secondary btn-lg">關閉</button>
     </div>
   `;
   
   modal.style.display = 'flex';
 }
 
-// Save order to member system
-async function saveOrderToMember(order) {
-  // Check if member is logged in
-  if (typeof MemberSystem !== 'undefined' && MemberSystem.isLoggedIn()) {
-    const user = MemberSystem.getCurrentUser();
-    if (user) {
-      // Save to Firestore
-      const savedOrder = await MemberSystem.saveOrder(order, user.uid);
-      console.log('Order saved to member system:', savedOrder?.id);
-    }
+function closeOrderModal() {
+  const modal = document.getElementById('order-modal');
+  if (modal) {
+    modal.style.display = 'none';
   }
 }
+
+// Also expose these functions globally for inline onclick handlers
+window.openCheckoutModal = function() {
+  const cart = AquariumApp.getCart();
+  if (cart.length === 0) {
+    AquariumApp.showToast('購物車是空的', 'error');
+    return;
+  }
+  
+  const summary = document.getElementById('checkout-summary');
+  const total = document.getElementById('checkout-total');
+  
+  if (summary) {
+    summary.innerHTML = cart.map(item => `
+      <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-200);">
+        <span>${item.name} x ${item.quantity}</span>
+        <span>$${item.price * item.quantity}</span>
+      </div>
+    `).join('');
+  }
+  
+  if (total) {
+    total.textContent = `$${AquariumApp.getCartTotal()}`;
+  }
+  
+  document.getElementById('checkout-modal').style.display = 'flex';
+};
+
+window.closeCheckout = function() {
+  document.getElementById('checkout-modal').style.display = 'none';
+};
+
+window.closeOrderModal = closeOrderModal;

@@ -20,6 +20,7 @@
           <a href="index.html">首頁</a>
           <a href="shop.html">商店</a>
           <a href="cart.html" class="active">🛒 購物車</a>
+          <a href="login.html">👤 會員</a>
           <a href="admin.html">管理</a>
         </nav>
         
@@ -58,7 +59,7 @@
             </div>
             <div class="cart-actions">
               <a href="shop.html" class="btn btn-secondary">繼續購物</a>
-              <button class="btn btn-primary" onclick="showCheckout()">
+              <button class="btn btn-primary" onclick="openCheckoutModal()">
                 💬 前往結帳 (LINE)
               </button>
             </div>
@@ -150,10 +151,9 @@
   </footer>
 
   <script src="js/app.js"></script>
-  <script src="js/cart.js"></script>
   <script src="js/settings.js"></script>
+  <script src="js/cart.js"></script>
   <script>
-    // Toggle mobile menu
     function toggleMobileMenu() {
       const navLinks = document.querySelector('.nav-links');
       const menuBtn = document.querySelector('.mobile-menu-btn');
@@ -161,8 +161,7 @@
       menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
     }
 
-    // Show checkout modal
-    function showCheckout() {
+    function openCheckoutModal() {
       const cart = AquariumApp.getCart();
       if (cart.length === 0) {
         AquariumApp.showToast('購物車是空的', 'error');
@@ -173,16 +172,16 @@
       document.getElementById('checkout-modal').style.display = 'flex';
     }
 
-    // Close checkout modal
     function closeCheckout() {
       document.getElementById('checkout-modal').style.display = 'none';
     }
 
-    // Render checkout summary
     function renderCheckoutSummary() {
       const cart = AquariumApp.getCart();
       const summary = document.getElementById('checkout-summary');
       const total = document.getElementById('checkout-total');
+      
+      if (!summary || !total) return;
       
       summary.innerHTML = cart.map(item => `
         <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-200);">
@@ -194,43 +193,6 @@
       total.textContent = `$${AquariumApp.getCartTotal()}`;
     }
 
-    // Handle checkout form submit
-    function handleCheckoutSubmit(e) {
-      e.preventDefault();
-      
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner" style="width:20px;height:20px;border-width:2px;margin:0;"></span> 處理中...';
-      }
-      
-      // Collect form data
-      const customerInfo = {
-        name: document.getElementById('customer-name').value,
-        phone: document.getElementById('customer-phone').value,
-        address: document.getElementById('customer-address').value,
-        note: document.getElementById('customer-note').value
-      };
-      
-      // Create order and open LINE
-      const order = AquariumApp.createOrder(customerInfo);
-      
-      if (order) {
-        // Close checkout modal
-        closeCheckout();
-        
-        // Show success message
-        AquariumApp.showToast('訂單已成立！正在開啟 LINE...', 'success');
-      } else {
-        AquariumApp.showToast('訂單建立失敗', 'error');
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '💬 確認訂單並開啟 LINE';
-        }
-      }
-    }
-
-    // Close order modal
     function closeOrderModal() {
       document.getElementById('order-modal').style.display = 'none';
     }
@@ -244,34 +206,21 @@
       });
     });
     
-    // Load site name and footer info from settings
+    // Load site name from settings
     function loadSiteName() {
-      const settings = SiteSettings.load();
-      // Update page title
-      document.title = settings.site.logo + ' ' + settings.site.name + ' - 購物車';
-      
-      // Update logo text in header
-      const logoText = document.querySelector('.logo-text');
-      if (logoText) {
-        logoText.innerHTML = settings.site.name;
+      if (typeof SiteSettings !== 'undefined') {
+        const settings = SiteSettings.load();
+        // Update logo text in header
+        const logoText = document.querySelector('.logo-text');
+        if (logoText) {
+          logoText.innerHTML = settings.site.name;
+        }
       }
-    }
-    
-    function loadFooterInfo() {
-      const settings = SiteSettings.load();
-      // Update any contact info elements if they exist
     }
     
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      // Setup checkout form
-      const form = document.getElementById('checkout-form');
-      if (form) {
-        form.addEventListener('submit', handleCheckoutSubmit);
-      }
-      
       loadSiteName();
-      loadFooterInfo();
     });
   </script>
 </body>
