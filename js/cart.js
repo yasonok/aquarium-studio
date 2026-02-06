@@ -44,6 +44,9 @@ function setupCheckoutForm() {
     const order = AquariumApp.createOrder(customerInfo);
     
     if (order) {
+      // Save order to member system if logged in
+      saveOrderToMember(order);
+      
       // Show success and LINE option
       showOrderConfirmation(order);
     } else {
@@ -93,4 +96,17 @@ function showOrderConfirmation(order) {
   `;
   
   modal.style.display = 'flex';
+}
+
+// Save order to member system
+async function saveOrderToMember(order) {
+  // Check if member is logged in
+  if (typeof MemberSystem !== 'undefined' && MemberSystem.isLoggedIn()) {
+    const user = MemberSystem.getCurrentUser();
+    if (user) {
+      // Save to Firestore
+      const savedOrder = await MemberSystem.saveOrder(order, user.uid);
+      console.log('Order saved to member system:', savedOrder?.id);
+    }
+  }
 }

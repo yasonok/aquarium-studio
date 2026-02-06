@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>會員登入 - Aquarium Studio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .login-container {
+      max-width: 450px;
+      margin: 60px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .login-logo {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    
+    .login-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .login-subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    .social-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: all 0.3s;
+    }
+    
+    .social-login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .google-btn {
+      background: white;
+      border: 2px solid #ddd !important;
+      color: #333;
+    }
+    
+    .google-btn:hover {
+      border-color: #4285f4 !important;
+      background: #f8faff;
+    }
+    
+    .facebook-btn {
+      background: #1877f2;
+      color: white;
+    }
+    
+    .facebook-btn:hover {
+      background: #166fe5;
+    }
+    
+    .line-btn {
+      background: #06c755;
+      color: white;
+    }
+    
+    .line-btn:hover {
+      background: #05b54a;
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+      color: #999;
+    }
+    
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e0e0e0;
+    }
+    
+    .divider span {
+      padding: 0 15px;
+      font-size: 0.9rem;
+    }
+    
+    .guest-btn {
+      background: transparent;
+      border: 2px dashed #ddd;
+      color: #666;
+    }
+    
+    .guest-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+    }
+    
+    .login-icon {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .terms {
+      font-size: 0.8rem;
+      color: #999;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-icon">🐟</span>
+          <span class="logo-text">Aquarium <span>Studio</span></span>
+        </a>
+        
+        <nav class="nav-links">
+          <a href="index.html">首頁</a>
+          <a href="shop.html">商店</a>
+          <a href="cart.html">🛒 購物車</a>
+          <a href="login.html" class="active">👤 會員</a>
+        </nav>
+        
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Section -->
+  <section class="section">
+    <div class="container">
+      <div class="login-container">
+        <div class="login-logo">🐟</div>
+        <h1 class="login-title">歡迎回來！</h1>
+        <p class="login-subtitle">登入會員帳號，管理您的訂單</p>
+        
+        <!-- Google Login -->
+        <button class="social-login-btn google-btn" onclick="handleGoogleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="login-icon">
+          Google 帳號登入
+        </button>
+        
+        <!-- Facebook Login -->
+        <button class="social-login-btn facebook-btn" onclick="handleFacebookLogin()">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMxODc3ZjIiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTI0IDEyaC0xMHYtMTBIMjR6Ii8+PHBhdGggZD0iTTEyIDEyaC04djhoOHoiLz48L3N2Zz4=" alt="Facebook" class="login-icon">
+          Facebook 帳號登入
+        </button>
+        
+        <!-- LINE Login -->
+        <button class="social-login-btn line-btn" onclick="handleLineLogin()">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/LINE_logo.svg/512px-LINE_logo.svg.png" alt="LINE" class="login-icon" style="width:20px;height:20px;">
+          LINE 帳號登入
+        </button>
+        
+        <div class="divider">
+          <span>或</span>
+        </div>
+        
+        <!-- Guest / Demo -->
+        <button class="social-login-btn guest-btn" onclick="handleGuestLogin()">
+          👤 以訪客身份繼續
+        </button>
+        
+        <p class="terms">
+          登入即表示您同意我們的服務條款和隱私政策
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 Aquarium Studio. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/member.js"></script>
+  <script>
+    function toggleMobileMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      navLinks.classList.toggle('active');
+      menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+    }
+    
+    async function handleGoogleLogin() {
+      try {
+        showLoading('正在登入...');
+        await MemberSystem.loginWithGoogle();
+        window.location.href = 'orders.html';
+      } catch (error) {
+        hideLoading();
+        alert('登入失敗：' + error.message);
+      }
+    }
+    
+    async function handleFacebookLogin() {
+      try {
+        showLoading('正在登入...');
+        await MemberSystem.loginWithFacebook();
+        window.location.href = 'orders.html';
+      } catch (error) {
+        hideLoading();
+        alert('登入失敗：' + error.message);
+      }
+    }
+    
+    async function handleLineLogin() {
+      try {
+        showLoading('正在登入...');
+        await MemberSystem.loginWithLine();
+        window.location.href = 'orders.html';
+      } catch (error) {
+        hideLoading();
+        alert('登入失敗：' + error.message);
+      }
+    }
+    
+    function handleGuestLogin() {
+      // Demo mode - save guest info
+      const guestId = 'guest_' + Date.now();
+      localStorage.setItem('guestUser', guestId);
+      window.location.href = 'cart.html';
+    }
+    
+    function showLoading(text) {
+      document.body.style.cursor = 'wait';
+    }
+    
+    function hideLoading() {
+      document.body.style.cursor = 'default';
+    }
+    
+    // Check if already logged in
+    document.addEventListener('DOMContentLoaded', function() {
+      if (MemberSystem.isLoggedIn()) {
+        window.location.href = 'orders.html';
+      }
+    });
+  </script>
+</body>
+</html>

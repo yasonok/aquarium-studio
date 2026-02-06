@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的訂單 - Aquarium Studio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .orders-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .orders-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .orders-header h1 {
+      font-size: 1.8rem;
+      color: #333;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .user-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .user-name {
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .user-email {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    
+    .logout-btn {
+      padding: 8px 16px;
+      background: #f5f5f5;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .logout-btn:hover {
+      background: #ffebee;
+      color: #f44336;
+    }
+    
+    .orders-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+    }
+    
+    .orders-tab {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #666;
+      border-radius: 8px 8px 0 0;
+      transition: all 0.3s;
+    }
+    
+    .orders-tab:hover {
+      color: #667eea;
+    }
+    
+    .orders-tab.active {
+      color: #667eea;
+      background: #f0f4ff;
+      font-weight: 600;
+    }
+    
+    .order-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+    }
+    
+    .order-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+    
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .order-id {
+      font-weight: 600;
+      color: #333;
+      font-size: 1.1rem;
+    }
+    
+    .order-date {
+      font-size: 0.85rem;
+      color: #999;
+    }
+    
+    .order-status {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .status-pending {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+    
+    .status-processing {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    
+    .status-shipped {
+      background: #e8f5e9;
+      color: #388e3c;
+    }
+    
+    .status-completed {
+      background: #f3e5f5;
+      color: #7b1fa2;
+    }
+    
+    .order-items {
+      margin-bottom: 15px;
+    }
+    
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      color: #555;
+    }
+    
+    .order-item-name {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15px;
+      border-top: 1px solid #f0f0f0;
+    }
+    
+    .order-total {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #667eea;
+    }
+    
+    .order-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .order-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .view-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+    }
+    
+    .view-btn:hover {
+      background: #5a6fd6;
+    }
+    
+    .track-btn {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+    
+    .track-btn:hover {
+      background: #f0f4ff;
+    }
+    
+    .empty-orders {
+      text-align: center;
+      padding: 60px 20px;
+      background: white;
+      border-radius: 12px;
+    }
+    
+    .empty-orders-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    
+    .empty-orders h3 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    .empty-orders p {
+      color: #999;
+      margin-bottom: 20px;
+    }
+    
+    .no-login {
+      text-align: center;
+      padding: 60px 20px;
+      background: white;
+      border-radius: 12px;
+    }
+    
+    .no-login-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    
+    .no-login h3 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    .login-link-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-icon">🐟</span>
+          <span class="logo-text">Aquarium <span>Studio</span></span>
+        </a>
+        
+        <nav class="nav-links">
+          <a href="index.html">首頁</a>
+          <a href="shop.html">商店</a>
+          <a href="cart.html">🛒 購物車</a>
+          <a href="login.html" class="active">👤 會員</a>
+        </nav>
+        
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Orders Section -->
+  <section class="section">
+    <div class="container">
+      <div class="orders-container" id="ordersContainer">
+        <!-- Content loaded dynamically -->
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order Detail Modal -->
+  <div id="order-detail-modal" class="modal-overlay" style="display: none;">
+    <div class="modal" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📋 訂單詳情</h3>
+        <button class="modal-close" onclick="closeOrderDetail()">&times;</button>
+      </div>
+      <div class="modal-body" id="order-detail-content">
+        <!-- Content loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 Aquarium Studio. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/member.js"></script>
+  <script>
+    let currentUser = null;
+    let userOrders = [];
+    let currentFilter = 'all';
+    
+    function toggleMobileMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      navLinks.classList.toggle('active');
+      menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+    }
+    
+    async function initOrdersPage() {
+      const container = document.getElementById('ordersContainer');
+      
+      // Check login status
+      currentUser = MemberSystem.getCurrentUser();
+      
+      if (!currentUser) {
+        // Not logged in
+        container.innerHTML = `
+          <div class="no-login">
+            <div class="no-login-icon">🔐</div>
+            <h3>請先登入會員</h3>
+            <p>登入後可以查看訂單記錄和追蹤配送狀態</p>
+            <a href="login.html" class="login-link-btn">前往登入</a>
+          </div>
+        `;
+        return;
+      }
+      
+      // Load orders
+      userOrders = await MemberSystem.getUserOrders(currentUser.uid);
+      
+      renderOrders();
+    }
+    
+    function renderOrders() {
+      const container = document.getElementById('ordersContainer');
+      const initials = currentUser.displayName ? currentUser.displayName.charAt(0).toUpperCase() : 'U';
+      const displayName = currentUser.displayName || currentUser.email || '會員';
+      
+      // Filter orders
+      const filteredOrders = currentFilter === 'all' 
+        ? userOrders 
+        : userOrders.filter(o => o.status === currentFilter);
+      
+      if (filteredOrders.length === 0) {
+        container.innerHTML = `
+          <div class="orders-header">
+            <h1>📦 我的訂單</h1>
+          </div>
+          <div class="user-info">
+            <div class="user-avatar">${initials}</div>
+            <div>
+              <div class="user-name">${displayName}</div>
+              <div class="user-email">${currentUser.email || ''}</div>
+            </div>
+            <button class="logout-btn" onclick="MemberSystem.logout()">🚪 登出</button>
+          </div>
+          <div class="empty-orders">
+            <div class="empty-orders-icon">📦</div>
+            <h3>暂无訂單記錄</h3>
+            <p>${currentFilter === 'all' ? '開始購物，創建您的第一筆訂單！' : '沒有此狀態的訂單'}</p>
+            <a href="shop.html" class="btn btn-primary btn-lg">開始購物</a>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = `
+        <div class="orders-header">
+          <h1>📦 我的訂單</h1>
+        </div>
+        <div class="user-info">
+          <div class="user-avatar">${initials}</div>
+          <div>
+            <div class="user-name">${displayName}</div>
+            <div class="user-email">${currentUser.email || ''}</div>
+          </div>
+          <button class="logout-btn" onclick="MemberSystem.logout()">🚪 登出</button>
+        </div>
+        
+        <div class="orders-tabs">
+          <button class="orders-tab ${currentFilter === 'all' ? 'active' : ''}" onclick="filterOrders('all')">
+            全部 (${userOrders.length})
+          </button>
+          <button class="orders-tab ${currentFilter === '待處理' ? 'active' : ''}" onclick="filterOrders('待處理')">
+            待處理 (${userOrders.filter(o => o.status === '待處理').length})
+          </button>
+          <button class="orders-tab ${currentFilter === '處理中' ? 'active' : ''}" onclick="filterOrders('處理中')">
+            處理中 (${userOrders.filter(o => o.status === '處理中').length})
+          </button>
+          <button class="orders-tab ${currentFilter === '已出貨' ? 'active' : ''}" onclick="filterOrders('已出貨')">
+            已出貨 (${userOrders.filter(o => o.status === '已出貨').length})
+          </button>
+          <button class="orders-tab ${currentFilter === '已完成' ? 'active' : ''}" onclick="filterOrders('已完成')">
+            已完成 (${userOrders.filter(o => o.status === '已完成').length})
+          </button>
+        </div>
+        
+        <div id="orders-list">
+          ${filteredOrders.map(order => renderOrderCard(order)).join('')}
+        </div>
+      `;
+    }
+    
+    function renderOrderCard(order) {
+      const statusClass = getStatusClass(order.status);
+      const displayDate = order.createdAt ? new Date(order.createdAt).toLocaleDateString('zh-TW') : order.date || new Date().toLocaleDateString('zh-TW');
+      
+      return `
+        <div class="order-card">
+          <div class="order-header">
+            <div>
+              <div class="order-id">${order.id}</div>
+              <div class="order-date">${displayDate}</div>
+            </div>
+            <span class="order-status ${statusClass}">${order.status}</span>
+          </div>
+          
+          <div class="order-items">
+            ${(order.items || []).map(item => `
+              <div class="order-item">
+                <span class="order-item-name">${item.name} x ${item.quantity}</span>
+                <span>$${item.price * item.quantity}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="order-footer">
+            <div class="order-total">總金額: $${order.total}</div>
+            <div class="order-actions">
+              <button class="order-btn view-btn" onclick="viewOrderDetail('${order.id}')">查看詳情</button>
+              <button class="order-btn track-btn" onclick="trackOrder('${order.id}')">追蹤訂單</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    function getStatusClass(status) {
+      const statusMap = {
+        '待處理': 'status-pending',
+        '處理中': 'status-processing',
+        '已出貨': 'status-shipped',
+        '已完成': 'status-completed'
+      };
+      return statusMap[status] || 'status-pending';
+    }
+    
+    function filterOrders(status) {
+      currentFilter = status;
+      renderOrders();
+    }
+    
+    function viewOrderDetail(orderId) {
+      const order = userOrders.find(o => o.id === orderId);
+      if (!order) return;
+      
+      const modal = document.getElementById('order-detail-modal');
+      const content = document.getElementById('order-detail-content');
+      const displayDate = order.createdAt ? new Date(order.createdAt).toLocaleString('zh-TW') : order.date || '';
+      
+      content.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <strong>訂單編號:</strong>
+            <span>${order.id}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <strong>訂單日期:</strong>
+            <span>${displayDate}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <strong>訂單狀態:</strong>
+            <span class="order-status ${getStatusClass(order.status)}">${order.status}</span>
+          </div>
+        </div>
+        
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+          <h4 style="margin-bottom: 10px;">顧客資料</h4>
+          <p style="margin-bottom: 5px;">姓名: ${order.customer?.name || ''}</p>
+          <p style="margin-bottom: 5px;">電話: ${order.customer?.phone || ''}</p>
+          <p>地址: ${order.customer?.address || ''}</p>
+        </div>
+        
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+          <h4 style="margin-bottom: 10px;">訂單內容</h4>
+          ${(order.items || []).map(item => `
+            <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+              <span>${item.name} x ${item.quantity}</span>
+              <span>$${item.price * item.quantity}</span>
+            </div>
+          `).join('')}
+          <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
+          <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem;">
+            <span>總金額</span>
+            <span style="color: #667eea;">$${order.total}</span>
+          </div>
+        </div>
+        
+        ${order.note ? `
+          <div style="background: #fff3e0; padding: 15px; border-radius: 8px;">
+            <strong>備註:</strong>
+            <p>${order.note}</p>
+          </div>
+        ` : ''}
+      `;
+      
+      modal.style.display = 'flex';
+    }
+    
+    function trackOrder(orderId) {
+      const order = userOrders.find(o => o.id === orderId);
+      if (!order) return;
+      
+      // Show tracking info
+      const statusSteps = [
+        { status: '待處理', icon: '📝', desc: '訂單已收到' },
+        { status: '處理中', icon: '🔄', desc: '正在準備商品' },
+        { status: '已出貨', icon: '📦', desc: '已出貨配送中' },
+        { status: '已完成', icon: '✅', desc: '訂單已完成' }
+      ];
+      
+      const currentIndex = statusSteps.findIndex(s => s.status === order.status);
+      
+      alert(`📦 訂單追蹤: ${order.id}\n\n` + 
+        statusSteps.map((step, i) => {
+          const isPast = i <= currentIndex;
+          const isCurrent = i === currentIndex;
+          return `${isPast ? '✅' : '⭕'} ${step.icon} ${step.status} ${isCurrent ? '◀️' : ''}`;
+        }).join('\n') + `\n\n目前狀態: ${order.status}`);
+    }
+    
+    function closeOrderDetail() {
+      document.getElementById('order-detail-modal').style.display = 'none';
+    }
+    
+    // Close modal on backdrop click
+    document.getElementById('order-detail-modal')?.addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeOrderDetail();
+      }
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      MemberSystem.init();
+      initOrdersPage();
+    });
+  </script>
+</body>
+</html>
