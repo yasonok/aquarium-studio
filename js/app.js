@@ -3,8 +3,8 @@
 // App Configuration
 const APP_CONFIG = {
   APP_NAME: 'Aquarium Studio',
-  LINE_ID: 'yasonok02061',
-  LINE_NOTIFY_URL: 'https://line.me/R/ti/p/@yasonok02061',
+  LINE_ID: 'tsAGZrm9vt',
+  LINE_NOTIFY_URL: 'https://line.me/R/ti/p/@tsAGZrm9vt',
   DEFAULT_CURRENCY: 'TWD',
   STORAGE_KEYS: {
     PRODUCTS: 'aquarium_products',

@@ -12,8 +12,8 @@ const SiteSettings = {
         },
         contact: {
             phone: '0912-345-678',
-            lineId: '@yasonok02061',
-            lineUrl: 'https://line.me/ti/p/@yasonok02061',
+            lineId: '@tsAGZrm9vt',
+            lineUrl: 'https://line.me/ti/p/@tsAGZrm9vt',
             address: '台灣水族用品店',
             email: 'yasonok@hotmail.com'
         }
