@@ -9,6 +9,84 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     <script src="js/settings.js"></script>
     <style>
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        #login-overlay.hidden {
+            display: none;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .login-box h1 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .login-box p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .login-box button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        
+        .login-box button:hover {
+            opacity: 0.9;
+        }
+        
+        #login-error {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* Admin content hidden by default */
+        #admin-content {
+            display: none;
+        }
+        
+        #admin-content.visible {
+            display: block;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -193,6 +271,11 @@
         
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
             color: white;
         }
         
@@ -463,20 +546,32 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo">
-                <span>🐟</span>
-                <span>Aquarium Studio</span>
-            </a>
-            <div style="display: flex; gap: 10px;">
-                <a href="shop.html" class="nav-links" style="display: none;">商店</a>
-                <a href="cart.html" class="nav-links" style="display: none;">購物車</a>
-                <a href="index.html" class="back-home">🏠 回到首頁</a>
-            </div>
+    <!-- Login Overlay -->
+    <div id="login-overlay">
+        <div class="login-box">
+            <h1>🔐 管理後台</h1>
+            <p>請輸入密碼以繼續</p>
+            <input type="password" id="login-password" placeholder="輸入密碼" onkeyup="handleLoginKeyup(event)">
+            <button onclick="checkLogin()">🔓 登入</button>
+            <p id="login-error">密碼錯誤，請重試</p>
         </div>
-    </header>
+    </div>
+    
+    <!-- Admin Content (hidden until login) -->
+    <div id="admin-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <span>🐟</span>
+                    <span>Aquarium Studio</span>
+                </a>
+                <div style="display: flex; gap: 10px;">
+                    <a href="index.html" class="back-home">🏠 回到首頁</a>
+                    <button onclick="logout()" class="back-home" style="background: rgba(255,0,0,0.3);">🚪 登出</button>
+                </div>
+            </div>
+        </header>
     
     <div class="container">
         <!-- Stats -->
@@ -524,9 +619,14 @@
                     <label>商店地址</label>
                     <input type="text" id="settingAddress" placeholder="台灣水族用品店">
                 </div>
-                <button type="button" class="btn btn-primary" onclick="saveSettings()">
-                    💾 儲存設定
-                </button>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                        💾 儲存設定
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="changePassword()">
+                        🔑 修改密碼
+                    </button>
+                </div>
                 <p id="settingsStatus" style="margin-top: 10px; color: green;"></p>
             </div>
         </div>
@@ -875,8 +975,56 @@
             }
         }
         
+        // Login functions
+        const DEFAULT_ADMIN_PASSWORD = 'aquarium123'; // Default password
+        
+        function checkLogin() {
+            const inputPassword = document.getElementById('login-password').value;
+            const savedPassword = localStorage.getItem('adminPassword');
+            const correctPassword = savedPassword || DEFAULT_ADMIN_PASSWORD;
+            
+            if (inputPassword === correctPassword) {
+                // Save password if it's the first time (set default)
+                if (!savedPassword) {
+                    localStorage.setItem('adminPassword', inputPassword);
+                }
+                // Show admin content
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('admin-content').classList.add('visible');
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('adminPassword');
+            document.getElementById('login-overlay').classList.remove('hidden');
+            document.getElementById('admin-content').classList.remove('visible');
+            document.getElementById('login-password').value = '';
+            document.getElementById('login-error').style.display = 'none';
+        }
+        
+        function handleLoginKeyup(event) {
+            if (event.key === 'Enter') {
+                checkLogin();
+            }
+        }
+        
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            const savedPassword = localStorage.getItem('adminPassword');
+            
+            // Check if already logged in (remember me)
+            if (savedPassword) {
+                // Auto-login with saved password
+                document.getElementById('login-password').value = savedPassword;
+                checkLogin();
+            } else {
+                // Show login screen
+                document.getElementById('login-overlay').classList.remove('hidden');
+                document.getElementById('admin-content').classList.remove('visible');
+            }
+            
             renderProducts();
             loadSettings();
             
@@ -887,6 +1035,18 @@
                 }
             });
         });
+        
+        // Change password function (add to settings)
+        function changePassword() {
+            const newPassword = prompt('輸入新密碼：');
+            if (newPassword && newPassword.length >= 4) {
+                localStorage.setItem('adminPassword', newPassword);
+                alert('✅ 密碼已更新！新密碼：' + newPassword);
+            } else if (newPassword) {
+                alert('❌ 密碼至少要 4 個字元');
+            }
+        }
     </script>
+    </div>
 </body>
 </html>
