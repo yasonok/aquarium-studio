@@ -29,12 +29,6 @@
       gap: 10px;
     }
     
-    .form-row-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-    }
-    
     .form-group {
       margin-bottom: 12px;
     }
@@ -64,77 +58,11 @@
       border-color: #667eea;
     }
     
-    .option-card {
-      display: block;
-      padding: 15px;
-      border: 2px solid #e1e5eb;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    
-    .option-card:hover {
-      border-color: #667eea;
-      background: #f8faff;
-    }
-    
-    .option-card.selected {
-      border-color: #667eea;
-      background: #f0f4ff;
-    }
-    
-    .option-card .option-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-    }
-    
-    .option-card .option-desc {
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 5px;
-    }
-    
-    .option-card .option-price {
-      font-weight: bold;
-      color: #667eea;
-    }
-    
-    .payment-grid {
+    .city-selector {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
-    }
-    
-    .payment-btn {
-      padding: 15px;
-      border: 2px solid #e1e5eb;
-      border-radius: 10px;
-      background: white;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.3s;
-    }
-    
-    .payment-btn:hover {
-      border-color: #667eea;
-    }
-    
-    .payment-btn.selected {
-      border-color: #667eea;
-      background: #f0f4ff;
-    }
-    
-    .payment-btn .icon {
-      font-size: 1.5rem;
-      margin-bottom: 5px;
-    }
-    
-    .payment-btn .name {
-      font-weight: 600;
-      font-size: 0.9rem;
+      margin-bottom: 10px;
     }
     
     .order-summary-card {
@@ -213,28 +141,6 @@
     .step.active .step-line {
       background: #667eea;
     }
-    
-    .city-selector {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    
-    .city-btn {
-      padding: 10px;
-      border: 2px solid #e1e5eb;
-      border-radius: 8px;
-      background: white;
-      cursor: pointer;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-    
-    .city-btn.selected {
-      border-color: #667eea;
-      background: #f0f4ff;
-    }
   </style>
 </head>
 <body>
@@ -300,11 +206,6 @@
           </div>
           
           <div class="form-group">
-            <label>LINE ID</label>
-            <input type="text" id="customer-lineid" placeholder="@yasonok02061">
-          </div>
-          
-          <div class="form-group">
             <label>送貨地址 *</label>
             <div class="city-selector">
               <select id="customer-city" onchange="updateDistricts()">
@@ -339,72 +240,13 @@
           </div>
           
           <div class="form-group">
-            <label>郵遞區號</label>
-            <input type="text" id="customer-zipcode" placeholder="100" readonly>
-          </div>
-        </div>
-        
-        <!-- Shipping Method -->
-        <div class="checkout-section">
-          <h3>🚚 配送方式</h3>
-          
-          <div class="option-card selected" onclick="selectShipping('blackcat-prepay', 200)">
-            <div class="option-header">
-              <span>🐱 黑貓宅急便 - 先付款</span>
-              <span class="option-price">$200</span>
-            </div>
-            <div class="option-desc">有購買活體請選此選項</div>
+            <label>LINE ID（用於確認訂單）</label>
+            <input type="text" id="customer-lineid" placeholder="@yasonok02061">
           </div>
           
-          <div class="option-card" onclick="selectShipping('blackcat-cod', 250)">
-            <div class="option-header">
-              <span>🐱 黑貓宅急便 - 貨到付款</span>
-              <span class="option-price">$250</span>
-            </div>
-            <div class="option-desc">已購買活體，貨到付款</div>
-          </div>
-          
-          <div class="option-card" onclick="selectShipping('post-office', 100)">
-            <div class="option-header">
-              <span>📮 郵局/大榮物流 - 器材專用</span>
-              <span class="option-price">$100</span>
-            </div>
-            <div class="option-desc">無購買活體，只有器材</div>
-          </div>
-        </div>
-        
-        <!-- Payment Method -->
-        <div class="checkout-section">
-          <h3>💳 付款方式</h3>
-          
-          <div class="payment-grid">
-            <div class="payment-btn selected" onclick="selectPayment('linepay')">
-              <div class="icon">💚</div>
-              <div class="name">LINE Pay</div>
-            </div>
-            <div class="payment-btn" onclick="selectPayment('atm')">
-              <div class="icon">🏦</div>
-              <div class="name">銀行轉帳</div>
-            </div>
-            <div class="payment-btn" onclick="selectPayment('cod')">
-              <div class="icon">💵</div>
-              <div class="name">貨到付款</div>
-            </div>
-            <div class="payment-btn" onclick="selectPayment('credit')">
-              <div class="icon">💳</div>
-              <div class="name">信用卡</div>
-            </div>
-          </div>
-          
-          <div id="atm-info" style="display: none; margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-            <p style="margin-bottom: 10px;"><strong>銀行轉帳資訊：</strong></p>
-            <p>銀行代碼：808</p>
-            <p>帳號：1234-5678-9012</p>
-            <p>戶名：Aquarium Studio</p>
-            <div class="form-group" style="margin-top: 15px;">
-              <label>轉帳帳號後5碼 *</label>
-              <input type="text" id="atm-last5" placeholder="請輸入後5碼" maxlength="5">
-            </div>
+          <div class="form-group">
+            <label>備註</label>
+            <textarea id="customer-note" placeholder="有任何特殊需求請告訴我們" rows="3"></textarea>
           </div>
         </div>
         
@@ -413,19 +255,7 @@
           <h3>📋 訂單摘要</h3>
           
           <div class="order-summary-card">
-            <h4>商品金額</h4>
             <div id="order-items"></div>
-          </div>
-          
-          <div class="order-summary-card">
-            <div class="order-item-row">
-              <span>商品小計</span>
-              <span id="subtotal">$0</span>
-            </div>
-            <div class="order-item-row">
-              <span>運費</span>
-              <span id="shipping-fee">$0</span>
-            </div>
             <div class="order-total-row">
               <span>訂單總金額</span>
               <span id="order-total" style="color: #667eea;">$0</span>
@@ -494,9 +324,6 @@
       '基隆市': '200', '新竹市': '300', '嘉義市': '600'
     };
     
-    let selectedShipping = { method: 'blackcat-prepay', fee: 200 };
-    let selectedPayment = 'linepay';
-    
     function toggleMobileMenu() {
       const navLinks = document.querySelector('.nav-links');
       const menuBtn = document.querySelector('.mobile-menu-btn');
@@ -518,53 +345,7 @@
           option.textContent = district;
           districtSelect.appendChild(option);
         });
-        
-        // Set zipcode (approximate)
-        if (zipcodes[city]) {
-          zipcodeInput.value = zipcodes[city];
-        }
       }
-    }
-    
-    function selectShipping(method, fee) {
-      selectedShipping = { method, fee };
-      
-      document.querySelectorAll('.checkout-section .option-card').forEach(card => {
-        card.classList.remove('selected');
-      });
-      
-      event.currentTarget.classList.add('selected');
-      
-      // Update shipping fee display
-      document.getElementById('shipping-fee').textContent = '$' + fee;
-      updateTotal();
-    }
-    
-    function selectPayment(method) {
-      selectedPayment = method;
-      
-      document.querySelectorAll('.payment-btn').forEach(btn => {
-        btn.classList.remove('selected');
-      });
-      
-      event.currentTarget.classList.add('selected');
-      
-      // Show/hide ATM info
-      const atmInfo = document.getElementById('atm-info');
-      if (method === 'atm') {
-        atmInfo.style.display = 'block';
-      } else {
-        atmInfo.style.display = 'none';
-      }
-    }
-    
-    function updateTotal() {
-      const cart = AquariumApp.getCart();
-      const subtotal = AquariumApp.getCartTotal();
-      const total = subtotal + selectedShipping.fee;
-      
-      document.getElementById('subtotal').textContent = '$' + subtotal;
-      document.getElementById('order-total').textContent = '$' + total;
     }
     
     function renderOrderItems() {
@@ -575,17 +356,22 @@
       if (cart.length === 0) {
         container.innerHTML = '<p style="text-align: center; color: #999;">購物車是空的</p>';
         itemsContainer.innerHTML = '<p style="text-align: center; color: #999;">購物車是空的</p>';
+        document.getElementById('order-total').textContent = '$0';
         return;
       }
       
-      const html = cart.map(item => `
-        <div class="order-item-row">
-          <span>${item.name} x ${item.quantity}</span>
-          <span>$${item.price * item.quantity}</span>
-        </div>
-      `).join('');
+      const subtotal = AquariumApp.getCartTotal();
       
-      container.innerHTML = html;
+      container.innerHTML = `
+        <h4>商品金額</h4>
+        ${cart.map(item => `
+          <div class="order-item-row">
+            <span>${item.name} x ${item.quantity}</span>
+            <span>$${item.price * item.quantity}</span>
+          </div>
+        `).join('')}
+      `;
+      
       itemsContainer.innerHTML = cart.map(item => `
         <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
           <div>
@@ -596,7 +382,7 @@
         </div>
       `).join('');
       
-      updateTotal();
+      document.getElementById('order-total').textContent = '$' + subtotal;
     }
     
     function submitOrder() {
@@ -627,9 +413,7 @@
         phone,
         address: fullAddress,
         lineId,
-        shippingMethod: selectedShipping.method,
-        paymentMethod: selectedPayment,
-        note: document.getElementById('customer-note')?.value || ''
+        note: document.getElementById('customer-note').value || ''
       };
       
       const order = AquariumApp.createOrder(customerInfo);
@@ -650,43 +434,6 @@
       const modal = document.getElementById('order-modal');
       const content = document.getElementById('order-modal-content');
       
-      const shippingNames = {
-        'blackcat-prepay': '黑貓宅急便 (先付款)',
-        'blackcat-cod': '黑貓宅急便 (貨到付款)',
-        'post-office': '郵局/大榮物流'
-      };
-      
-      const paymentNames = {
-        'linepay': 'LINE Pay',
-        'atm': '銀行轉帳',
-        'cod': '貨到付款',
-        'credit': '信用卡'
-      };
-      
-      // Get LINE ID from settings
-      let lineId = 'yasonok02061';
-      if (typeof SiteSettings !== 'undefined') {
-        const settings = SiteSettings.load();
-        lineId = settings.contact.lineId.replace('@', '');
-      }
-      
-      // Generate order message
-      const orderMessage = `
-🐟 Aquarium Studio 訂單
-
-訂單編號: ${order.id}
-姓名: ${order.customer.name}
-電話: ${order.customer.phone}
-地址: ${order.customer.address}
-配送: ${shippingNames[order.customer.shippingMethod]}
-付款: ${paymentNames[order.customer.paymentMethod]}
-
-商品:
-${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * item.quantity}`).join('\n')}
-
-總金額: $${order.total}
-`;
-      
       content.innerHTML = `
         <div style="text-align: center; padding: 20px;">
           <div style="font-size: 4rem; margin-bottom: 20px;">✅</div>
@@ -697,8 +444,7 @@ ${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * i
             <p><strong>姓名:</strong> ${order.customer.name}</p>
             <p><strong>電話:</strong> ${order.customer.phone}</p>
             <p><strong>地址:</strong> ${order.customer.address}</p>
-            <p><strong>配送:</strong> ${shippingNames[order.customer.shippingMethod]}</p>
-            <p><strong>付款:</strong> ${paymentNames[order.customer.paymentMethod]}</p>
+            <p><strong>LINE ID:</strong> ${order.customer.lineId || '未提供'}</p>
           </div>
           
           <p style="font-size: 1.2rem; font-weight: bold; margin: 20px 0;">
@@ -706,10 +452,10 @@ ${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * i
           </p>
           
           <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
-            <button onclick="contactViaLine('${lineId}', \`${orderMessage}\`)" class="btn btn-primary btn-lg" style="background: #06c755;">
+            <button onclick="contactViaLine()" class="btn btn-primary btn-lg" style="background: #06c755;">
               💬 加入 LINE 聯繫管理員
             </button>
-            <button onclick="copyOrderInfo(\`${orderMessage}\`)" class="btn btn-secondary btn-lg">
+            <button onclick="copyOrderInfo()" class="btn btn-secondary btn-lg">
               📋 複製訂單資訊
             </button>
           </div>
@@ -726,11 +472,33 @@ ${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * i
       modal.style.display = 'flex';
     }
     
-    function contactViaLine(lineId, message) {
-      // Copy message to clipboard
+    function contactViaLine() {
+      let lineId = 'yasonok02061';
+      if (typeof SiteSettings !== 'undefined') {
+        const settings = SiteSettings.load();
+        lineId = settings.contact.lineId.replace('@', '');
+      }
+      
+      const order = JSON.parse(localStorage.getItem('aquarium_orders') || '[]').pop();
+      if (!order) return;
+      
+      const message = `
+🐟 Aquarium Studio 訂單
+
+訂單編號: ${order.id}
+姓名: ${order.customer.name}
+電話: ${order.customer.phone}
+地址: ${order.customer.address}
+LINE ID: ${order.customer.lineId || '未提供'}
+
+商品:
+${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * item.quantity}`).join('\n')}
+
+總金額: $${order.total}
+`;
+      
       copyOrderInfo(message);
       
-      // Open LINE
       const lineUrl = `https://line.me/ti/p/@${lineId}`;
       window.open(lineUrl, '_blank');
       
@@ -738,10 +506,27 @@ ${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * i
     }
     
     function copyOrderInfo(message) {
+      if (!message) {
+        const order = JSON.parse(localStorage.getItem('aquarium_orders') || '[]').pop();
+        if (!order) return;
+        message = `
+🐟 Aquarium Studio 訂單
+
+訂單編號: ${order.id}
+姓名: ${order.customer.name}
+電話: ${order.customer.phone}
+地址: ${order.customer.address}
+
+商品:
+${order.items.map(item => `- ${item.name} x ${item.quantity} = $${item.price * item.quantity}`).join('\n')}
+
+總金額: $${order.total}
+`;
+      }
+      
       navigator.clipboard.writeText(message.trim()).then(() => {
         AquariumApp.showToast('訂單資訊已複製到剪貼簿', 'success');
       }).catch(() => {
-        // Fallback for older browsers
         const textarea = document.createElement('textarea');
         textarea.value = message.trim();
         document.body.appendChild(textarea);
