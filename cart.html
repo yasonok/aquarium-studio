@@ -6,181 +6,61 @@
   <title>購物車 - Aquarium Studio</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .cart-empty {
-      text-align: center;
-      padding: 60px 20px;
-    }
-    
-    .cart-empty-icon {
-      font-size: 4rem;
-      margin-bottom: 20px;
-    }
-    
-    .cart-empty h3 {
-      color: #333;
-      margin-bottom: 10px;
-    }
-    
-    .cart-empty p {
-      color: #999;
-      margin-bottom: 20px;
-    }
-    
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .cart-item-info {
-      flex: 1;
-    }
-    
-    .cart-item-name {
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 5px;
-    }
-    
-    .cart-item-price {
-      color: #667eea;
-      font-weight: bold;
-    }
-    
-    .cart-item-qty {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    
-    .qty-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 1px solid #ddd;
-      background: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: #667eea;
-    }
-    
-    .qty-btn:hover {
-      background: #f0f4ff;
-      border-color: #667eea;
-    }
-    
-    .cart-item-remove {
-      color: #ff4757;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      padding: 10px;
-    }
-    
-    .cart-summary {
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-    
-    .cart-total {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #667eea;
-    }
-    
-    .line-order-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #06c755 0%, #00b44a 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      transition: all 0.3s;
-    }
-    
-    .line-order-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(6, 199, 85, 0.4);
-    }
-    
-    .line-order-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    .empty-cart-btn {
-      background: white;
-      color: #667eea;
-      border: 2px solid #667eea;
-      padding: 12px 30px;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    
-    .empty-cart-btn:hover {
-      background: #f0f4ff;
-    }
+    .cart-empty { text-align: center; padding: 60px 20px; }
+    .cart-empty-icon { font-size: 4rem; margin-bottom: 20px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 600; color: #333; margin-bottom: 5px; }
+    .cart-item-price { color: #667eea; font-weight: bold; }
+    .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .qty-btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #ddd; background: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #667eea; }
+    .qty-btn:hover { background: #f0f4ff; border-color: #667eea; }
+    .cart-item-remove { color: #ff4757; background: none; border: none; cursor: pointer; font-size: 1.2rem; padding: 10px; }
+    .cart-summary { background: #f8f9fa; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .cart-total { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: bold; color: #667eea; }
+    .line-order-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #06c755, #00b44a); color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .empty-cart-btn { background: white; color: #667eea; border: 2px solid #667eea; padding: 12px 30px; border-radius: 10px; font-weight: 600; cursor: pointer; }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <div class="header-inner">
-        <a href="index.html" class="logo">
-          <span class="logo-icon">🐟</span>
-          <span class="logo-text">Aquarium <span>Studio</span></span>
-        </a>
-        
-        <nav class="nav-links">
-          <a href="index.html">首頁</a>
-          <a href="shop.html">商店</a>
-          <a href="cart.html" class="active cart-icon">
-            🛒 購物車
-            <span class="cart-badge" id="cartCount">0</span>
-          </a>
-          <a href="admin.html">管理</a>
-        </nav>
-      </div>
-    </div>
-  </header>
+  <!-- Loading -->
+  <div style="display:flex;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;">
+    <h2>🐟 Aquarium Studio</h2>
+    <p>載入中...</p>
+  </div>
 
-  <!-- Cart Section -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>🛒 購物車</h2>
-        <p id="cartStatus">確認您的商品</p>
+  <!-- LINE Page (if not added) -->
+  <div id="line-page" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#06c755,#00b44a);color:white;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;">
+    <h1 style="font-size:2.5rem;margin-bottom:20px;">💚 加入 LINE 好友</h1>
+    <p style="font-size:1.2rem;margin-bottom:30px;opacity:0.9;">請先加入好友才能購買商品</p>
+    <a href="https://line.me/ti/p/yasonok02061" style="background:white;color:#06c755;padding:20px 50px;border-radius:50px;font-size:1.3rem;font-weight:bold;text-decoration:none;">📱 加入 LINE 好友</a>
+    <button onclick="confirmAdded()" style="margin-top:20px;background:transparent;border:3px solid white;color:white;padding:15px 40px;border-radius:30px;font-size:1.1rem;cursor:pointer;">✅ 我已加入好友</button>
+  </div>
+
+  <!-- Cart Page (if added) -->
+  <div id="cart-page" style="display:none;">
+    <header class="header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="index.html" class="logo">
+            <span class="logo-icon">🐟</span>
+            <span class="logo-text">Aquarium <span>Studio</span></span>
+          </a>
+          <nav class="nav-links">
+            <a href="index.html">首頁</a>
+            <a href="shop.html">商店</a>
+            <a href="cart.html" class="active cart-icon">🛒 購物車 <span class="cart-badge" id="cartCount">0</span></a>
+            <a href="admin.html">管理</a>
+          </nav>
+        </div>
       </div>
-      
-      <!-- Cart Items -->
-      <div class="cart-container" id="cartContainer">
-        <div class="cart-header">
-          <span>商品</span>
-          <span>數量</span>
-          <span>小計</span>
-          <span></span>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>🛒 購物車</h2>
+          <p>確認您的商品</p>
         </div>
         
         <div id="cartItems">
@@ -194,85 +74,55 @@
               <span id="cartTotal">$0</span>
             </div>
           </div>
-          
-          <button class="line-order-btn" id="lineOrderBtn" onclick="sendToLine()">
-            💬 發送訂單
-          </button>
-          
-          <p style="text-align: center; margin-top: 15px; color: #999; font-size: 0.9rem;">
-            點擊上方按鈕開啟 LINE，貼上訂單資訊並傳送
-          </p>
+          <button class="line-order-btn" onclick="sendToLine()">💬 發送訂單</button>
+          <p style="text-align:center;margin-top:15px;color:#999;font-size:0.9rem;">點擊上方按鈕開啟 LINE</p>
+        </div>
+        
+        <div class="cart-empty" id="emptyCart" style="display:none;">
+          <div class="cart-empty-icon">🛒</div>
+          <h3>購物車是空的</h3>
+          <p>去看看有哪些商品吧！</p>
+          <a href="shop.html" class="empty-cart-btn">去商店逛逛</a>
         </div>
       </div>
-      
-      <!-- Empty Cart -->
-      <div class="cart-empty" id="emptyCart">
-        <div class="cart-empty-icon">🛒</div>
-        <h3>購物車是空的</h3>
-        <p>去看看有哪些商品吧！</p>
-        <a href="shop.html" class="empty-cart-btn">去商店逛逛</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-bottom">
-        <p>&copy; 2026 Aquarium Studio. All rights reserved.</p>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom">
+          <p>&copy; 2026 Aquarium Studio</p>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 
   <script src="js/app.js"></script>
-  <script src="js/settings.js"></script>
   <script>
-    let lineId = 'yasonok02061';
+    const LINE_ID = 'yasonok02061';
     
-    // Check if LINE friend has been added
-    function checkLineAdded() {
-      const hasAddedLine = localStorage.getItem('lineAdded_' + lineId) === 'true';
-      if (!hasAddedLine) {
-        // Not added yet - redirect to LINE add friend page
-        const lineUrls = [
-          'https://line.me/ti/p/@' + lineId,
-          'https://lin.ee/' + lineId
-        ];
-        window.location.href = lineUrls[0];
-        return false;
-      }
-      return true;
+    function confirmAdded() {
+      localStorage.setItem('lineAdded_' + LINE_ID, 'true');
+      location.reload();
     }
-    
-    function toggleMobileMenu() {
-      const navLinks = document.querySelector('.nav-links');
-      const menuBtn = document.querySelector('.mobile-menu-btn');
-      navLinks.classList.toggle('active');
-      menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+
+    function showLinePage() {
+      document.body.innerHTML = document.getElementById('line-page').innerHTML;
+      setTimeout(() => { window.location.href = 'https://line.me/ti/p/' + LINE_ID; }, 500);
     }
-    
-    function loadSettings() {
-      if (typeof SiteSettings !== 'undefined') {
-        const settings = SiteSettings.load();
-        lineId = settings.contact.lineId.replace('@', '');
-        
-        // Update logo
-        const logoText = document.querySelector('.logo-text');
-        if (logoText) {
-          logoText.innerHTML = settings.site.name;
-        }
-      }
+
+    function showCartPage() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('line-page').style.display = 'none';
+      document.getElementById('cart-page').style.display = 'block';
     }
-    
+
     function renderCart() {
       const cart = AquariumApp.getCart();
       const itemsContainer = document.getElementById('cartItems');
       const summaryContainer = document.getElementById('cartSummary');
       const emptyContainer = document.getElementById('emptyCart');
-      const totalEl = document.getElementById('cartTotal');
-      const countEl = document.getElementById('cartCount');
       
-      countEl.textContent = cart.length;
+      document.getElementById('cartCount').textContent = cart.length;
       
       if (cart.length === 0) {
         itemsContainer.innerHTML = '';
@@ -295,94 +145,47 @@
               <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
             </div>
           </div>
-          <div style="font-weight: bold; color: #667eea;">
-            $${item.price * item.quantity}
-          </div>
+          <div style="font-weight:bold;color:#667eea;">$${item.price * item.quantity}</div>
           <button class="cart-item-remove" onclick="removeItem(${index})">🗑️</button>
         </div>
       `).join('');
       
-      totalEl.textContent = '$' + AquariumApp.getCartTotal();
+      document.getElementById('cartTotal').textContent = '$' + AquariumApp.getCartTotal();
     }
-    
+
     function updateQty(index, delta) {
       const cart = AquariumApp.getCart();
       if (cart[index]) {
         cart[index].quantity += delta;
-        if (cart[index].quantity <= 0) {
-          cart.splice(index, 1);
-        }
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
         localStorage.setItem('aquarium_cart', JSON.stringify(cart));
         renderCart();
-        updateCount();
       }
     }
-    
+
     function removeItem(index) {
       const cart = AquariumApp.getCart();
       cart.splice(index, 1);
       localStorage.setItem('aquarium_cart', JSON.stringify(cart));
       renderCart();
-      updateCount();
     }
-    
-    function updateCount() {
-      const cart = AquariumApp.getCart();
-      const countEl = document.getElementById('cartCount');
-      if (countEl) {
-        countEl.textContent = cart.length;
-      }
-    }
-    
+
     function sendToLine() {
       const cart = AquariumApp.getCart();
-      if (cart.length === 0) {
-        AquariumApp.showToast('購物車是空的', 'error');
-        return;
-      }
+      if (cart.length === 0) { alert('購物車是空的'); return; }
       
       const total = AquariumApp.getCartTotal();
-      const orderTime = new Date().toLocaleString('zh-TW');
+      const msg = `🐟 Aquarium Studio 訂單\n\n📦 商品:\n${cart.map(i => `• ${i.name} x ${i.quantity} = $${i.price * i.quantity}`).join('\n')}\n\n💰 總金額: $${total}`;
       
-      const message = `
-🐟 Aquarium Studio 訂單
-
-📅 時間: ${orderTime}
-
-📦 商品:
-${cart.map(item => `• ${item.name} x ${item.quantity} = $${item.price * item.quantity}`).join('\n')}
-
-💰 總金額: $${total}
-
-請確認訂單，謝謝！`;
-      
-      const encodedMessage = encodeURIComponent(message);
-      const lineUrl = `https://line.me/ti/p/@${lineId}?${encodedMessage}`;
-      
-      // Open LINE directly
-      window.location.href = lineUrl;
-      
-      // Backup: also open in new tab
-      setTimeout(() => {
-        window.open(lineUrl, '_blank');
-      }, 500);
-      
-      // Copy message as backup
-      navigator.clipboard.writeText(message.trim()).then(() => {
-        AquariumApp.showToast('已開啟 LINE，貼上訂單資訊並傳送即可', 'success');
-      }).catch(() => {
-        AquariumApp.showToast('已開啟 LINE，請手動輸入訂單資訊', 'success');
-      });
+      const url = `https://line.me/ti/p/${LINE_ID}?${encodeURIComponent(msg)}`;
+      window.location.href = url;
+      navigator.clipboard.writeText(msg);
     }
-    
-    // Initialize
+
     document.addEventListener('DOMContentLoaded', function() {
-      // Check if LINE friend has been added first
-      if (!checkLineAdded()) {
-        return; // Will redirect in checkLineAdded
-      }
-      loadSettings();
-      renderCart();
+      const hasAddedLine = localStorage.getItem('lineAdded_' + LINE_ID) === 'true';
+      if (hasAddedLine) { showCartPage(); renderCart(); } 
+      else { showLinePage(); }
     });
   </script>
 </body>
